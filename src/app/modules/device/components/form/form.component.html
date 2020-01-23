@@ -1,0 +1,47 @@
+<form [formGroup]="myForm" novalidate (ngSubmit)="submit()" class="login-form">
+  <mat-form-field>
+<!--    <label>Name</label>-->
+    <input matInput  type="text" name="name" formControlName="name" placeholder="Name"/>
+
+    <div class="alert alert-danger"
+         *ngIf="myForm.controls['name'].invalid && myForm.controls['name'].touched">
+      Type name
+    </div>
+  </mat-form-field>
+  <mat-form-field>
+<!--    <label>Serial number</label>-->
+    <input matInput type="text" name="serialNumber" formControlName="serialNumber" placeholder="Serial number"/>
+
+    <div class="alert alert-danger"
+         *ngIf="myForm.controls['serialNumber'].invalid && myForm.controls['serialNumber'].touched">
+      Type serial number
+    </div>
+  </mat-form-field>
+  <mat-form-field>
+<!--    <label>Organization number</label>-->
+    <input matInput type="text" class="form-control" name="organizationNumber" formControlName="organizationNumber" placeholder="Organization number"/>
+  </mat-form-field>
+<!--  <mat-form-field>-->
+<!--    <label>Purchase date</label>-->
+<!--    <input type="date" class="form-control" name="purchaseDate" formControlName="purchaseDate" />-->
+<!--  </mat-form-field>-->
+  <mat-form-field>
+<!--  <label for="purchaseDate">Purchase date</label>-->
+  <input matInput [matDatepicker]="myDatepicker" name="purchaseDate" formControlName="purchaseDate" id="purchaseDate" placeholder="Select purchase date"/>
+  <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+  <mat-datepicker #myDatepicker></mat-datepicker>
+  </mat-form-field>
+  <div class="form-group">
+    <label for="inUse">In use</label>
+    <input type="checkbox" class="form-control" name="inUse" formControlName="inUse" id="inUse"/>
+  </div>
+  <mat-checkbox>
+<!--    <label for="broken">Broken</label>-->
+<!--    <input type="checkbox"class="form-control" name="broken" formControlName="broken" id="broken"/>-->
+  </mat-checkbox>
+  <div class="form-group">
+    <button class="btn btn-default" [disabled]="myForm.invalid">
+      Отправить
+    </button>
+  </div>
+</form>
