@@ -1,3 +1,10 @@
-<div>
-  <app-line></app-line>
-</div>
+<mat-list><mat-list-item>
+  <div class="cellIndex">№</div>
+  <div class="cell">Name</div>
+  <div class="cell">Serial number</div>
+</mat-list-item></mat-list>
+
+<mat-list *ngFor="let device of allDevice; let i = index">
+
+  <app-line [data]="device" [index]="i+1"></app-line>
+</mat-list>

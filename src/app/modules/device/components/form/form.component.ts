@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {DataDeviceService} from '../../services/data-device.service';
 
 @Component({
   selector: 'app-form',
@@ -9,8 +10,17 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class FormComponent implements OnInit {
   myForm: FormGroup;
 
-  constructor() {
-    this.myForm = new FormGroup({
+  constructor(public service: DataDeviceService,
+              private fb: FormBuilder) {
+
+  }
+
+  ngOnInit() {
+    this.initForm();
+  }
+
+  initForm() {
+    this.myForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       serialNumber: new FormControl('', [
         Validators.required
@@ -22,11 +32,12 @@ export class FormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
   submit() {
-    console.log(this.myForm);
+    this.service.createDevice(this.myForm.value);
+    this.myForm.reset();
+    Object.keys(this.myForm.controls).forEach(key => {
+      this.myForm.get(key).setErrors(null) ;
+    });
   }
 
 

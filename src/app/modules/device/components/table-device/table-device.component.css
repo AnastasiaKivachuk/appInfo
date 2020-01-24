@@ -1,0 +1,9 @@
+.cell{
+  width: 30%;
+}
+.cellIndex{
+  width: 20%;
+}
+mat-list-item{
+  background: #DCDCDC;
+}

@@ -12,6 +12,8 @@ import {DetailsComponent} from './modules/device/components/details/details.comp
 import {LineComponent} from './modules/device/components/table-device/line/line.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MainDeviceDetailsComponent} from './modules/device/container/main-device-details/main-device-details.component';
+import {MatListModule} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,12 +26,14 @@ import {MainDeviceDetailsComponent} from './modules/device/container/main-device
     LineComponent
   ],
   imports: [
+    HttpClientModule,
     MyMaterialModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
