@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {DataDeviceService} from '../../services/data-device.service';
+import * as moment from 'moment';
+import {DetailsDevice} from '../../models/detailsDevice';
 
 @Component({
   selector: 'app-form',
@@ -10,8 +12,8 @@ import {DataDeviceService} from '../../services/data-device.service';
 export class FormComponent implements OnInit {
   myForm: FormGroup;
 
-  constructor(public service: DataDeviceService,
-              private fb: FormBuilder) {
+// public formData: DetailsDevice;
+  constructor(public service: DataDeviceService) {
 
   }
 
@@ -20,7 +22,7 @@ export class FormComponent implements OnInit {
   }
 
   initForm() {
-    this.myForm = this.fb.group({
+    this.myForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       serialNumber: new FormControl('', [
         Validators.required
@@ -33,10 +35,12 @@ export class FormComponent implements OnInit {
   }
 
   submit() {
-    this.service.createDevice(this.myForm.value);
+    let formData;
+    formData = {...this.myForm.value, purchaseDate: moment(this.myForm.value.purchaseDate).format('DD-MM-YYYY')};
+    this.service.createDevice(formData);
     this.myForm.reset();
     Object.keys(this.myForm.controls).forEach(key => {
-      this.myForm.get(key).setErrors(null) ;
+      this.myForm.get(key).setErrors(null);
     });
   }
 

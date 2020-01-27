@@ -1,9 +1,8 @@
-<mat-card-title>Create device</mat-card-title>
-
+<mat-card-title >Create device</mat-card-title>
 <form [formGroup]="myForm" novalidate (ngSubmit)="submit()" class="login-form">
   <div class="columnInput">
   <mat-form-field>
-    <input matInput type="text" name="name" formControlName="name" placeholder="Name"/>
+    <input matInput type="text" name="name" formControlName="name" placeholder="Name*"/>
 
     <div class="alert alert-danger"
          *ngIf="myForm.controls['name'].invalid && myForm.controls['name'].touched">
@@ -11,7 +10,7 @@
     </div>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="text" name="serialNumber" formControlName="serialNumber" placeholder="Serial number"/>
+    <input matInput type="text"  name="serialNumber" formControlName="serialNumber" placeholder="Serial number*"/>
 
     <div class="alert alert-danger"
          *ngIf="myForm.controls['serialNumber'].invalid && myForm.controls['serialNumber'].touched">
@@ -36,7 +35,7 @@
   <br>
   <mat-checkbox name="broken" formControlName="broken">Broken</mat-checkbox>
   </div>
-    <button mat-raised-button class="btn btn-default" [disabled]="myForm.invalid">
+    <button mat-raised-button color="primary"  [disabled]="myForm.invalid">
       Create device
     </button>
 

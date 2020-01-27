@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DataDeviceService} from '../../../services/data-device.service';
+import {Router} from '@angular/router';
+import {DetailsDevice} from '../../../models/detailsDevice';
 
 @Component({
   selector: 'app-line',
@@ -7,22 +9,22 @@ import {DataDeviceService} from '../../../services/data-device.service';
   styleUrls: ['./line.component.css']
 })
 export class LineComponent implements OnInit {
-@Input() data: [];
+@Input() data: [DetailsDevice];
 @Input() index: number;
-  constructor(public service: DataDeviceService) {
+  constructor(public service: DataDeviceService,
+              public router: Router) {
   }
 
   ngOnInit() {
   }
 
-  edit() {
-    console.log('edit');
+  edit(id) {
+    // console.log('edit');
+    this.router.navigate([`/details/${id}`]);
   }
 
-  delete() {
-    console.log(this.data.id);
-    console.log('delete');
-    this.service.deleteDevice(this.data.id);
+  delete(id) {
+    this.service.deleteDevice(id);
   }
 
 }

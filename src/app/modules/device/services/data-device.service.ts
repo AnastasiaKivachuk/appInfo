@@ -16,8 +16,8 @@ export class DataDeviceService {
   }
 
 
-  getAllDevice() {
-    return this.http.get(`${this.mainUrl}/device/all?page=2&pageSize=10`);
+  getAllDevice(currentPage) {
+    return this.http.get(`${this.mainUrl}/device/all?page=${currentPage + 1}&pageSize=10`);
   }
 
   createDevice(formValue) {
@@ -30,15 +30,20 @@ export class DataDeviceService {
       broken: formValue.broken
     };
     console.log(body);
-    return this.http.put(`${this.mainUrl}/device/`, body).subscribe(a => {
-      console.log(a);
-    });
+    return this.http.put(`${this.mainUrl}/device/`, body).subscribe(a =>
+      console.log(a)
+    );
   }
 
   deleteDevice(id) {
-    return this.http.delete(`${this.mainUrl}/device/?id=${id}`);
+    console.log(id);
+    return this.http.delete(`${this.mainUrl}/device/?id=${id}`).subscribe(a =>
+      console.log(a));
   }
 
+  getDetailsDevice(id) {
+    return this.http.get(`${this.mainUrl}/device/${id}`);
+  }
   // editDevice() {
   //   const body = {
   //     name: formValue.name,

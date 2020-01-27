@@ -7,4 +7,13 @@
 <mat-list *ngFor="let device of allDevice; let i = index">
 
   <app-line [data]="device" [index]="i+1"></app-line>
+
 </mat-list>
+<mat-paginator [length]="totalElements"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               [showFirstLastButtons]="true"
+               (page)="pageEvent = handlePage($event)"
+
+>
+</mat-paginator>

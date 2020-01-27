@@ -6,8 +6,8 @@ import {MainDeviceDetailsComponent} from './modules/device/container/main-device
 
 const routes: Routes = [{ path: '', redirectTo: '/device', pathMatch: 'full' },
   { path: 'device', component: MainDeviceComponent},
-  // { path: 'device/details:/id', component: MainDeviceDetailsComponent}
-  { path: 'details', component: MainDeviceDetailsComponent}
+  // { path: 'details:/id', component: MainDeviceDetailsComponent}
+  { path: 'details/:id', component: MainDeviceDetailsComponent}
   ];
 
 @NgModule({
