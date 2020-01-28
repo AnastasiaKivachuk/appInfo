@@ -19,7 +19,6 @@ export class LineComponent implements OnInit {
   }
 
   edit(id) {
-    // console.log('edit');
     this.router.navigate([`/details/${id}`]);
   }
 

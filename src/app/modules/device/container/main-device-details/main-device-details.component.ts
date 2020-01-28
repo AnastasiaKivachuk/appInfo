@@ -1,7 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {DataDeviceService} from '../../services/data-device.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DetailsDevice} from '../../models/detailsDevice';
 
 @Component({
   selector: 'app-main-device-details',
@@ -9,18 +6,12 @@ import {DetailsDevice} from '../../models/detailsDevice';
   styleUrls: ['./main-device-details.component.css']
 })
 export class MainDeviceDetailsComponent implements OnInit {
-  public dataDetails: DetailsDevice;
 
-  constructor(public service: DataDeviceService,
-              public router: Router,
-              private route: ActivatedRoute) {
+  constructor() {
   }
 
   ngOnInit() {
-    // this.service.getDetailsDevice(this.route.snapshot.paramMap.get('id'))
-    //   .subscribe((data: DetailsDevice) => {
-    //     this.dataDetails = data;
-    //   });
+
   }
 
 }

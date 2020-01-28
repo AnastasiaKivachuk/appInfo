@@ -1,9 +1,8 @@
 <h2>Update device</h2>
 <form [formGroup]="updateForm" novalidate (ngSubmit)="submit()" class="login-form" *ngIf="this.dataDetails">
-<!--  <form [formGroup]="myForm" novalidate (ngSubmit)="submit()" class="login-form">-->
   <div class="columnInput">
     <mat-form-field>
-      <input matInput type="text" name="name" formControlName="name" placeholder="Name"/>
+      <input matInput type="text" name="name" formControlName="name" placeholder="Name*"/>
 
       <div class="alert alert-danger"
            *ngIf="updateForm.controls['name'].invalid && updateForm.controls['name'].touched">
@@ -11,7 +10,7 @@
       </div>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" name="serialNumber" formControlName="serialNumber" placeholder="Serial number"/>
+      <input matInput type="text" name="serialNumber" formControlName="serialNumber" placeholder="Serial number*"/>
 
       <div class="alert alert-danger"
            *ngIf="updateForm.controls['serialNumber'].invalid && updateForm.controls['serialNumber'].touched">

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {DataDeviceService} from '../../services/data-device.service';
 import * as moment from 'moment';
-import {DetailsDevice} from '../../models/detailsDevice';
 
 @Component({
   selector: 'app-form',
@@ -12,9 +11,7 @@ import {DetailsDevice} from '../../models/detailsDevice';
 export class FormComponent implements OnInit {
   myForm: FormGroup;
 
-// public formData: DetailsDevice;
   constructor(public service: DataDeviceService) {
-
   }
 
   ngOnInit() {
@@ -43,6 +40,4 @@ export class FormComponent implements OnInit {
       this.myForm.get(key).setErrors(null);
     });
   }
-
-
 }
