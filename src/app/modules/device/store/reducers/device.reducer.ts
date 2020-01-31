@@ -22,12 +22,12 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
         isFetching: true,
         error: '',
         data: null,
-        paginator: {
-          totalElements: 0,
-          totalPages: 0,
-          pageSize: 10,
-          currentPage: 0
-        }
+        // paginator: {
+        //   totalElements: 0,
+        //   totalPages: 0,
+        //   pageSize: 10,
+        //   currentPage: 0
+        // }
       };
 
     case StoreDataAction.ERROR:

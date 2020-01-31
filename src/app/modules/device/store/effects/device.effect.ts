@@ -31,11 +31,11 @@ export class DataEffects {
   );
 
 
-  // @Effect()
-  // deleteDevice$ = this.actions$.pipe(
-  //   ofType(dataActions.DELETE),
-  //   mapTo(new dataActions.Fetch()),
-  // );
+  @Effect()
+  deleteDevice$ = this.actions$.pipe(
+    ofType(dataActions.DELETE),
+    mapTo(new dataActions.Fetch()),
+  );
 
   @Effect()
   getData$ = this.actions$.pipe(
@@ -45,41 +45,6 @@ export class DataEffects {
       .pipe(
         map((response: DataResponse) => {
           // console.log(response.content);
-          const dataObject = response;
-          return new dataActions.Success(dataObject);
-        }),
-        catchError(() => of(new dataActions.Error('some error')))
-      )
-    ),
-  );
-
-
-
-
-  // @Effect()
-  // addDevice$ = this.actions$.pipe(
-  //   ofType(dataActions.CHANGE),
-  //   withLatestFrom(this.store.select(getDataPaginatorProperties)),
-  //   switchMap((data) => this.rootService.getAllDevice(data[1].currentPage, data[1].pageSize)
-  //     .pipe(
-  //       map((response: DataResponse) => {
-  //         const dataObject = response;
-  //         return new dataActions.Success(dataObject);
-  //       }),
-  //       catchError(() => of(new dataActions.Error('some error')))
-  //     )
-  //   ),
-  // );
-
-
-
-  @Effect()
-  deleteDevice$ = this.actions$.pipe(
-    ofType(dataActions.DELETE),
-    withLatestFrom(this.store.select(getDataPaginatorProperties)),
-    switchMap((data) => this.rootService.getAllDevice(data[1].currentPage, data[1].pageSize)
-      .pipe(
-        map((response: DataResponse) => {
           const dataObject = response;
           return new dataActions.Success(dataObject);
         }),
