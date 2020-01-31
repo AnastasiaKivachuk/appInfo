@@ -2,7 +2,7 @@
 <form [formGroup]="myForm" novalidate (ngSubmit)="submit()" class="login-form">
   <div class="columnInput">
   <mat-form-field>
-    <input matInput type="text" name="name" formControlName="name" placeholder="Name*"/>
+    <input matInput type="text" name="name" formControlName="name" placeholder="Name*" [errorStateMatcher]="matFormFieldMatcher"/>
 
     <div class="alert alert-danger"
          *ngIf="myForm.controls['name'].invalid && myForm.controls['name'].touched">
@@ -10,7 +10,7 @@
     </div>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="text"  name="serialNumber" formControlName="serialNumber" placeholder="Serial number*"/>
+    <input matInput type="text"  name="serialNumber" formControlName="serialNumber" placeholder="Serial number*" [errorStateMatcher]="matFormFieldMatcher"/>
 
     <div class="alert alert-danger"
          *ngIf="myForm.controls['serialNumber'].invalid && myForm.controls['serialNumber'].touched">
@@ -31,12 +31,23 @@
   </mat-form-field>
   </div>
   <div class="columnInput">
-  <mat-checkbox name="inUse" formControlName="inUse">In use</mat-checkbox>
+  <mat-checkbox name="inUse" color="primary" formControlName="inUse">In use</mat-checkbox>
   <br>
-  <mat-checkbox name="broken" formControlName="broken">Broken</mat-checkbox>
+  <mat-checkbox name="broken" color="primary" formControlName="broken">Broken</mat-checkbox>
   </div>
-    <button mat-raised-button color="primary"  [disabled]="myForm.invalid">
+  <div class="columnButton">
+    <button mat-raised-button color="primary"  [disabled]="myForm.invalid || myForm.untouched" >
       Create device
     </button>
-
+  <div class="alert alert-danger"
+       *ngIf="this.errorMessage">
+    Can't create device
+  </div>
+<!--<app-button-with-spinner [disabled]="myForm.invalid || myForm.untouched" [showSpinner]="isFetching$ | async"> </app-button-with-spinner>-->
+<!--      <div class="alert alert-danger"-->
+<!--           *ngIf="this.errorMessage">-->
+<!--        Can't create device-->
+<!--      </div>-->
+  </div>
 </form>
+

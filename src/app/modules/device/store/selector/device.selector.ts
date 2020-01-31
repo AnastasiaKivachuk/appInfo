@@ -23,3 +23,8 @@ export const getDataPaginatorProperties = createSelector(
   getState,
   fromData.getPaginatorProperties,
 );
+
+export const getError = createSelector(
+  getState,
+  fromData.getError,
+);

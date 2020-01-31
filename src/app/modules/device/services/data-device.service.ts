@@ -3,6 +3,9 @@ import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
+import {Store} from '@ngrx/store';
+import {AppState, dataActions} from '../store';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,9 @@ export class DataDeviceService {
 
   constructor(public router: Router,
               private route: ActivatedRoute,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private store: Store<AppState>,
+              private toastr: ToastrService) {
   }
 
 
@@ -22,6 +27,7 @@ export class DataDeviceService {
   }
 
   createDevice(formValue) {
+    console.log(123456);
     const body = {
       name: formValue.name,
       serialNumber: formValue.serialNumber,
@@ -31,27 +37,24 @@ export class DataDeviceService {
       broken: formValue.broken
     };
     console.log(body);
-    return this.http.put(`${this.mainUrl}/device/`, body).subscribe(a =>
-      console.log(a)
-    );
+    return this.http.put(`${this.mainUrl}/device/`, body);
   }
 
   deleteDevice(id) {
-    console.log(id);
-    return this.http.delete(`${this.mainUrl}/device/?id=${id}`).subscribe(a =>
-      console.log(a));
+    return this.http.delete(`${this.mainUrl}/device/?id=${id}`)
   }
 
   getDetailsDevice(id) {
     return this.http.get(`${this.mainUrl}/device/${id}`);
   }
+
   editDevice(id, body) {
     console.log(id, body);
-    return this.http.patch(`${this.mainUrl}/device?id=${id}`, body).subscribe(a =>
-      console.log(a)
-    );
+    return this.http.patch(`${this.mainUrl}/device?id=${id}`, body);
   }
-
+  showSuccess(message) {
+    this.toastr.success(message);
+  }
 }
 
 

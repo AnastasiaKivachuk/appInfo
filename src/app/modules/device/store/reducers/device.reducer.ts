@@ -26,7 +26,7 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
           totalElements: 0,
           totalPages: 0,
           pageSize: 10,
-          currentPage: 1
+          currentPage: 0
         }
       };
 
@@ -42,8 +42,13 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
       return {
         ...state,
         isFetching: false,
-        data: action.payload,
-        paginator: action.payload
+        data: action.payload.content,
+        paginator: {
+          totalElements: action.payload.totalElements,
+          totalPages: action.payload.totalPages,
+          pageSize: action.payload.size,
+          currentPage: action.payload.number
+        }
       };
 
     case StoreDataAction.CHANGE:
@@ -51,18 +56,19 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
         ...state,
         paginator: {
           ...state.paginator,
-          pageSize: action.payload,
-          currentPage: action.payload
+          pageSize: action.payload.pageSize,
+          currentPage: action.payload.currentPage
         }
       };
 
     case StoreDataAction.ADD:
       return {
         ...state,
-        data: state.paginator.currentPage === state.paginator.totalPages && state.data.length < state.paginator.pageSize ? [...state.data, action.payload] : state.data,
+        data: state.paginator.currentPage === state.paginator.totalPages -1 && state.data.length < state.paginator.pageSize ? [...state.data, action.payload] : state.data,
         paginator: {
           ...state.paginator,
-          pageSize: state.paginator.totalPages * state.paginator.pageSize === state.paginator.totalElements  ? state.paginator.totalPages + 1 : state.paginator.totalPages,
+          totalPages: state.paginator.totalPages * state.paginator.pageSize === state.paginator.totalElements ? state.paginator.totalPages + 1 : state.paginator.totalPages,
+          totalElements: state.paginator.totalElements + 1,
         }
       };
 
@@ -71,6 +77,7 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
   }
 }
 
+export const getError = (state: State) => state.error;
 export const getData = (state: State) => state.data;
 export const getStatus = (state: State) => state.isFetching;
 export const getPaginatorProperties = (state: State) => state.paginator;

@@ -1,0 +1,16 @@
+<!--<button-->
+<!--  type="submit"-->
+<!--  class="enter"-->
+<!--  [disabled]="disabled||showSpinner" i18n="@@Submit"-->
+<!--&gt;-->
+<!--  Submit-->
+<!--  <div class="spinner-wrp">-->
+<!--    <app-spinner-for-button *ngIf="showSpinner"></app-spinner-for-button>-->
+<!--  </div>-->
+<!--</button>-->
+
+<button mat-raised-button color="primary"   >
+  Create device
+<!--  <app-spinner-for-button *ngIf="showSpinner"></app-spinner-for-button>-->
+  <mat-spinner *ngIf="showSpinner"></mat-spinner>
+</button>

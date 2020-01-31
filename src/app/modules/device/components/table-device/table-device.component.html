@@ -3,17 +3,18 @@
   <div class="cell">Name</div>
   <div class="cell">Serial number</div>
 </mat-list-item></mat-list>
+<div *ngIf="allDevice">
+<mat-list *ngFor="let device of allDevice; let i = index" >
 
-<mat-list *ngFor="let device of allDevice; let i = index">
-
-  <app-line [data]="device" [index]="i+1"></app-line>
+  <app-line [data]="device" [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1" (onChanged)="onChanged($event)"></app-line>
 
 </mat-list>
-<mat-paginator [length]="totalElements"
-               [pageSize]="pageSize"
+</div>
+<mat-paginator [length]="this.ObjDataPaginatorProperties.totalElements"
+               [pageSize]="this.ObjDataPaginatorProperties.pageSize"
                [pageSizeOptions]="[5, 10, 25, 100]"
                [showFirstLastButtons]="true"
                (page)="pageEvent = handlePage($event)"
-
 >
 </mat-paginator>
+<app-dialog-window *ngIf="visibility" (onChanged)="getDeleteStatus($event)"></app-dialog-window>

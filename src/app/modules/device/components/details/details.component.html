@@ -1,42 +1,51 @@
 <h2>Update device</h2>
 <form [formGroup]="updateForm" novalidate (ngSubmit)="submit()" class="login-form" *ngIf="this.dataDetails">
-  <div class="columnInput">
-    <mat-form-field>
-      <input matInput type="text" name="name" formControlName="name" placeholder="Name*"/>
 
+  <mat-form-field>
+    <input matInput type="text" name="name" formControlName="name" placeholder="Name*"/>
+
+    <div class="alert alert-danger"
+         *ngIf="updateForm.controls['name'].invalid && updateForm.controls['name'].touched">
+      Type name
+    </div>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" name="serialNumber" formControlName="serialNumber" placeholder="Serial number*"/>
+
+    <div class="alert alert-danger"
+         *ngIf="updateForm.controls['serialNumber'].invalid && updateForm.controls['serialNumber'].touched">
+      Type serial number
+    </div>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="text" class="form-control" name="organizationNumber" formControlName="organizationNumber"
+           placeholder="Organization number"/>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="myDatepicker" name="purchaseDate" formControlName="purchaseDate" id="purchaseDate"
+           placeholder="Select purchase date"/>
+    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker color="primary" #myDatepicker></mat-datepicker>
+  </mat-form-field>
+
+
+  <mat-checkbox name="inUse" color="primary" formControlName="inUse">In use</mat-checkbox>
+  <br>
+  <mat-checkbox name="broken" color="primary" formControlName="broken">Broken</mat-checkbox>
+
+  <div>
+    <div>
+      <button mat-raised-button color="primary" class="btn btn-default" [disabled]="updateForm.invalid">
+        Update device
+      </button>
       <div class="alert alert-danger"
-           *ngIf="updateForm.controls['name'].invalid && updateForm.controls['name'].touched">
-        Type name
+           *ngIf="this.errorMessage">
+        Can't create device
       </div>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" name="serialNumber" formControlName="serialNumber" placeholder="Serial number*"/>
-
-      <div class="alert alert-danger"
-           *ngIf="updateForm.controls['serialNumber'].invalid && updateForm.controls['serialNumber'].touched">
-        Type serial number
-      </div>
-    </mat-form-field>
+      <button mat-raised-button color="primary" class="btn btn-default" (click)="back()">
+        Back
+      </button>
+    </div>
   </div>
-  <div class="columnInput">
-    <mat-form-field>
-      <input matInput type="text" class="form-control" name="organizationNumber" formControlName="organizationNumber"
-             placeholder="Organization number"/>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput [matDatepicker]="myDatepicker" name="purchaseDate" formControlName="purchaseDate" id="purchaseDate"
-             placeholder="Select purchase date"/>
-      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-      <mat-datepicker color="primary" #myDatepicker></mat-datepicker>
-    </mat-form-field>
-  </div>
-  <div class="columnInput">
-    <mat-checkbox name="inUse" formControlName="inUse">In use</mat-checkbox>
-    <br>
-    <mat-checkbox name="broken" formControlName="broken">Broken</mat-checkbox>
-  </div>
-  <button mat-raised-button class="btn btn-default" [disabled]="updateForm.invalid">
-    Update device
-  </button>
-
 </form>

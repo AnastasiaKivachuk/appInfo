@@ -1,7 +1,6 @@
-form{
+form {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .columnInput {
@@ -12,15 +11,49 @@ form{
   margin-right: 50px;
 }
 
-mat-form-field{
+mat-form-field {
   min-width: 300px;
 }
 
-button{
+button {
   box-sizing: border-box;
   height: 50px;
+ position: relative;
+  bottom: 0;
+}
+.columnButton{
+  display: flex;
+  width: auto;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+h2 {
+  text-align: center;
 }
 
-h2{
-  text-align: center;
+mat-checkbox{
+  margin-top: 25px;
+}
+mat-checkbox:nth-child(2){
+  margin-top: 18px;
+}
+
+mat-card {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+mat-card > button {
+  margin: 0 auto;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.alert-danger{
+  color: red;
 }

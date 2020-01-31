@@ -1,4 +1,4 @@
-mat-spinner{
+mat-card{
   position: fixed;
   top: 50%;
   left: 50%;
@@ -6,4 +6,8 @@ mat-spinner{
   height: auto;
   width: auto;
   display: block;
+}
+.wrapButtons{
+  display: flex;
+  justify-content: center;
 }

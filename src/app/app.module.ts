@@ -19,18 +19,30 @@ import {MainDeviceDetailsComponent} from './modules/device/container/main-device
 import {DataDeviceService} from './modules/device/services/data-device.service';
 import {fromData} from './modules/device/store/reducers';
 import {DataEffects} from './modules/device/store/effects/device.effect';
+// import {CommonModule} from '@angular/common';
+import {ToastrModule} from 'ngx-toastr';
+import { DialogWindowComponent } from './modules/device/components/dialog-window/dialog-window.component';
+import {ButtonWithSpinnerComponent} from './modules/device/components/button-with-spinner/button-with-spinner.component';
+import {SpinnerForButtonComponent} from './modules/device/components/button-with-spinner/spinner-for-button/spinner-for-button.component';
+
 
 @NgModule({
   declarations: [
+    ButtonWithSpinnerComponent,
     AppComponent,
     FormComponent,
     TableDeviceComponent,
     MainDeviceComponent,
     MainDeviceDetailsComponent,
     DetailsComponent,
-    LineComponent
+    LineComponent,
+    DialogWindowComponent,
+    SpinnerForButtonComponent
   ],
   imports: [
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right'
+    }),
     HttpClientModule,
     MyMaterialModule,
     BrowserModule,

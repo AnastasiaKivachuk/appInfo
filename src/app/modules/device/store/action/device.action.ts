@@ -21,28 +21,38 @@ export class Error implements Action {
 export class Success implements Action {
   readonly type = SUCCESS;
 
-  constructor(public payload: {}) {
+  constructor(public payload: {
+    number: number;
+    size: number;
+    currentPage: number;
+    pageSize: number;
+    totalPages: number;
+    totalElements: number;
+    content: [];
+  }) {
   }
 }
 
 export class ChangePropertyOfPaginator implements Action {
   readonly type = CHANGE;
 
-  constructor(public payload: {}) {
+  constructor(public payload: {
+    currentPage: number;
+    pageSize: number;
+  }) {
   }
 }
 
 export class DeleteDevice implements Action {
   readonly type = DELETE;
-
-  constructor(public payload: {}) {
-  }
+ 
 }
 
 export class AddDevice implements Action {
   readonly type = ADD;
-
-  constructor(public payload: {}) {
+  constructor(public payload: {
+    content: [];
+  }) {
   }
 }
 

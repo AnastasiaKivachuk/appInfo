@@ -8,46 +8,79 @@ import * as dataActions from '../action/device.action';
 // import {AppState} from '../app.state';
 // import {objDate} from '../selector/data.selectors';
 import {DataDeviceService} from '../../services/data-device.service';
-import {DataResponse, PaginatorModel, DetailsDevice} from '../../models';
+import {DataResponse} from '../../models';
 import {AppState} from '../app.state';
 import {getDataPaginatorProperties} from '../selector/device.selector';
+
 
 @Injectable({
   providedIn: 'root'
 })
 @Injectable()
 export class DataEffects {
-  constructor(
-    private actions$: Actions,
-    private store: Store<AppState>,
-    private rootService: DataDeviceService,
+  constructor(private rootService: DataDeviceService,
+              private actions$: Actions,
+              private store: Store<AppState>
   ) {
   }
 
   @Effect()
   changeData$ = this.actions$.pipe(
-    ofType(dataActions.START_END_DATE),
+    ofType(dataActions.CHANGE),
     mapTo(new dataActions.Fetch()),
   );
 
+
+  // @Effect()
+  // deleteDevice$ = this.actions$.pipe(
+  //   ofType(dataActions.DELETE),
+  //   mapTo(new dataActions.Fetch()),
+  // );
+
   @Effect()
-  getDataPaginatorProperties$ = this.actions$.pipe(
+  getData$ = this.actions$.pipe(
     ofType(dataActions.FETCH),
     withLatestFrom(this.store.select(getDataPaginatorProperties)),
-    switchMap(() => this.rootService.getAllDevice(1, 10)
+    switchMap((data) => this.rootService.getAllDevice(data[1].currentPage, data[1].pageSize)
       .pipe(
         map((response: DataResponse) => {
-          console.log(1);
-          console.log(response);
-          const dataObject = Object.keys(response.content)
-      //       // .reduce((data: Data, date: string) =>
-      //       //   Object.assign(data, {
-      //       //     [date]: response.near_earth_objects[date]
-      //       //       .map((asteroid: Asteroid) => {
-      //       //         const {id, name} = asteroid;
-      //       //         return {id, name};
-      //       //       })
-      //       //   }), {});
+          // console.log(response.content);
+          const dataObject = response;
+          return new dataActions.Success(dataObject);
+        }),
+        catchError(() => of(new dataActions.Error('some error')))
+      )
+    ),
+  );
+
+
+
+
+  // @Effect()
+  // addDevice$ = this.actions$.pipe(
+  //   ofType(dataActions.CHANGE),
+  //   withLatestFrom(this.store.select(getDataPaginatorProperties)),
+  //   switchMap((data) => this.rootService.getAllDevice(data[1].currentPage, data[1].pageSize)
+  //     .pipe(
+  //       map((response: DataResponse) => {
+  //         const dataObject = response;
+  //         return new dataActions.Success(dataObject);
+  //       }),
+  //       catchError(() => of(new dataActions.Error('some error')))
+  //     )
+  //   ),
+  // );
+
+
+
+  @Effect()
+  deleteDevice$ = this.actions$.pipe(
+    ofType(dataActions.DELETE),
+    withLatestFrom(this.store.select(getDataPaginatorProperties)),
+    switchMap((data) => this.rootService.getAllDevice(data[1].currentPage, data[1].pageSize)
+      .pipe(
+        map((response: DataResponse) => {
+          const dataObject = response;
           return new dataActions.Success(dataObject);
         }),
         catchError(() => of(new dataActions.Error('some error')))
