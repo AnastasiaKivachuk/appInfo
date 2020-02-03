@@ -1,14 +1,17 @@
-<mat-list><mat-list-item>
-  <div class="cellIndex">№</div>
-  <div class="cell">Name</div>
-  <div class="cell">Serial number</div>
-</mat-list-item></mat-list>
-<div *ngIf="allDevice">
-<mat-list *ngFor="let device of allDevice; let i = index" >
-
-  <app-line [data]="device" [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1" (onChanged)="onChanged($event)"></app-line>
-
+<mat-list>
+  <mat-list-item>
+    <div class="cellIndex">№</div>
+    <div class="cell">Name</div>
+    <div class="cell">Serial number</div>
+  </mat-list-item>
 </mat-list>
+<div *ngIf="allDevice">
+  <mat-list *ngFor="let device of allDevice; let i = index">
+
+    <app-line [data]="device"
+              [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1"
+              (onChanged)="onChanged($event)"></app-line>
+  </mat-list>
 </div>
 <mat-paginator [length]="this.ObjDataPaginatorProperties.totalElements"
                [pageSize]="this.ObjDataPaginatorProperties.pageSize"

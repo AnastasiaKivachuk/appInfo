@@ -4,6 +4,6 @@ import {PaginatorModel} from './paginator.model';
 export interface State {
   isFetching: boolean;
   error: string;
-  data: [DetailsDevice];
+  content: [DetailsDevice];
   paginator: PaginatorModel;
 }

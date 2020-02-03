@@ -11,6 +11,7 @@ export class ButtonWithSpinnerComponent implements OnInit {
 
   @Input() disabled: boolean;
   @Input() showSpinner: boolean;
+  @Input() name: string;
 
   ngOnInit() {
   }

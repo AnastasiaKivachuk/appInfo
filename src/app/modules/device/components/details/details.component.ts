@@ -7,7 +7,6 @@ import * as moment from 'moment';
 import {dataActions} from '../../store/action';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store';
-import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-details',
@@ -19,6 +18,8 @@ export class DetailsComponent implements OnInit {
   public updateDetales: DetailsDevice;
   public updateForm: FormGroup;
   public errorMessage = false;
+  public showSpinner = false;
+  public nameButton = `Update device`;
 
   constructor(public service: DataDeviceService,
               public router: Router,
@@ -45,7 +46,7 @@ export class DetailsComponent implements OnInit {
     this.updateForm = this.fb.group({
       id: [defaultDate.id, [Validators.required]],
       name: [defaultDate.name, [Validators.required]],
-      serialNumber: [defaultDate.serialNumber],
+      serialNumber: [defaultDate.serialNumber,  [Validators.required]],
       organizationNumber: [defaultDate.organizationNumber],
       purchaseDate: [defaultDate.purchaseDate],
       inUse: [defaultDate.inUse],
@@ -64,12 +65,15 @@ export class DetailsComponent implements OnInit {
         }
       }
     );
+    this.showSpinner = true;
     this.service.editDevice(this.updateDetales.id, bodyRequest).subscribe(addDevice => {
         this.service.showSuccess('Device successfully updated!');
+        this.showSpinner = false;
       },
       error => {
         this.store.dispatch(new dataActions.Error('some error'));
         this.errorMessage = true;
+        this.showSpinner = false;
       });
   }
 

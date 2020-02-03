@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {DataDeviceService} from '../../services/data-device.service';
 import * as moment from 'moment';
 import {dataActions} from '../../store/action';
 import {Store} from '@ngrx/store';
 import {AppState, dataSelectors} from '../../store';
-import {ToastrService} from 'ngx-toastr';
-import {invalid} from 'moment';
 import {ErrorStateMatcher} from '@angular/material';
 
 class Matcher implements ErrorStateMatcher {
@@ -22,15 +20,15 @@ class Matcher implements ErrorStateMatcher {
 })
 export class FormComponent implements OnInit {
   myForm: FormGroup;
-  matFormFieldMatcher = new Matcher()
-
+  matFormFieldMatcher = new Matcher();
+  public nameButton = `Create device`;
   public error = this.store.select(dataSelectors.getError);
   public errorMessage = false;
-  isFetching$ = this.store.select(dataSelectors.getDataStatus);
+  public showSpinner = false;
 
   constructor(public service: DataDeviceService,
               private store: Store<AppState>,
-              private toastr: ToastrService) {
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -42,7 +40,7 @@ export class FormComponent implements OnInit {
   }
 
   initForm() {
-    this.myForm = new FormGroup({
+    this.myForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       serialNumber: new FormControl('', [
         Validators.required
@@ -64,35 +62,19 @@ export class FormComponent implements OnInit {
     }
     formData = {...this.myForm.value, purchaseDate};
     console.log(formData);
+    this.showSpinner = true;
     this.service.createDevice(formData).subscribe(addDevice => {
-        console.log(formData);
+        this.showSpinner = false;
+        this.myForm.reset();
         this.store.dispatch(new dataActions.AddDevice(formData));
         this.service.showSuccess('New device successfully created!');
 
       },
       error => {
         this.store.dispatch(new dataActions.Error('some error'));
+        this.myForm.reset();
         this.errorMessage = true;
+        this.showSpinner = false;
       });
-
-    this.myForm.reset();
-    // // this.myForm.get(broken).setErrors(invalid());
-    // Object.keys(this.myForm.controls).forEach(key => {
-    //   console.log(key);
-    //   // console.log(this.myForm.get(key).getError())
-    //
-    //   // this.myForm.get(broken).setErrors(invalid());
-    //   this.myForm.get(key).setErrors(null);
-    //   // console.log(this.myForm.get(key));
-    //   // console.log(this.myForm.controls['name'].touched);
-    //   // this.myForm.controls;
-    //   // if (key === 'broken') {
-    //   //   this.myForm.get(key).setErrors(invalid());
-    //   // }
-    // });
-    // this.initForm();
-    // // Object.keys(this.myForm.controls).forEach()
   }
-
-
 }

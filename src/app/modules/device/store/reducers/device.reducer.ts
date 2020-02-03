@@ -4,12 +4,12 @@ import * as StoreDataAction from '../action/device.action';
 const initialState: State = {
     isFetching: false,
     error: '',
-    data: null,
+  content: null,
     paginator: {
       totalElements: 0,
       totalPages: 0,
       pageSize: 10,
-      currentPage: 1
+      currentPage: 0
     }
   }
 ;
@@ -21,13 +21,7 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
         ...state,
         isFetching: true,
         error: '',
-        data: null,
-        // paginator: {
-        //   totalElements: 0,
-        //   totalPages: 0,
-        //   pageSize: 10,
-        //   currentPage: 0
-        // }
+        content: null
       };
 
     case StoreDataAction.ERROR:
@@ -42,7 +36,7 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
       return {
         ...state,
         isFetching: false,
-        data: action.payload.content,
+        content: action.payload.content,
         paginator: {
           totalElements: action.payload.totalElements,
           totalPages: action.payload.totalPages,
@@ -64,7 +58,7 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
     case StoreDataAction.ADD:
       return {
         ...state,
-        data: state.paginator.currentPage === state.paginator.totalPages -1 && state.data.length < state.paginator.pageSize ? [...state.data, action.payload] : state.data,
+        content: state.paginator.currentPage === state.paginator.totalPages - 1 && state.content.length < state.paginator.pageSize ? [...state.content, action.payload] : state.content,
         paginator: {
           ...state.paginator,
           totalPages: state.paginator.totalPages * state.paginator.pageSize === state.paginator.totalElements ? state.paginator.totalPages + 1 : state.paginator.totalPages,
@@ -78,6 +72,6 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
 }
 
 export const getError = (state: State) => state.error;
-export const getData = (state: State) => state.data;
+export const getData = (state: State) => state.content;
 export const getStatus = (state: State) => state.isFetching;
 export const getPaginatorProperties = (state: State) => state.paginator;

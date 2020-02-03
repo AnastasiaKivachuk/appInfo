@@ -27,7 +27,6 @@ export class DataDeviceService {
   }
 
   createDevice(formValue) {
-    console.log(123456);
     const body = {
       name: formValue.name,
       serialNumber: formValue.serialNumber,

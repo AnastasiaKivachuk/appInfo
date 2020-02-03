@@ -36,9 +36,9 @@
 
   <div>
     <div>
-      <button mat-raised-button color="primary" class="btn btn-default" [disabled]="updateForm.invalid">
-        Update device
-      </button>
+      <app-button-with-spinner [name]="this.nameButton" [showSpinner] = "this.showSpinner" [disabled]="updateForm.invalid">
+
+      </app-button-with-spinner>
       <div class="alert alert-danger"
            *ngIf="this.errorMessage">
         Can't create device
