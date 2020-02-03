@@ -44,8 +44,8 @@ export class DataEffects {
     switchMap((data) => this.rootService.getAllDevice(data[1].currentPage, data[1].pageSize)
       .pipe(
         map((response: DataResponse) => {
-          console.log(response);
           const dataObject = response;
+          console.log(dataObject);
           return new dataActions.Success(dataObject);
         }),
         catchError(() => of(new dataActions.Error('some error')))

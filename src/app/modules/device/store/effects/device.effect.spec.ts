@@ -1,12 +1,13 @@
 import {DataEffects} from './device.effect';
 import {getTestBed, TestBed} from '@angular/core/testing';
 import {provideMockActions} from '@ngrx/effects/testing';
-import {cold, hot} from 'jasmine-marbles';
+import {cold, hot, time} from 'jest-marbles';
 import {Observable} from 'rxjs';
 import * as dataActions from '../action/device.action';
 import {RouterTestingModule} from '@angular/router/testing';
 import {DataDeviceService} from '../../services/data-device.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+
 
 import {MockStore, provideMockStore} from '@ngrx/store/testing';
 import {DataResponse, DetailsDevice} from '../../models';
@@ -17,9 +18,9 @@ describe('My Effects', () => {
   let injector: TestBed;
   let service: jasmine.SpyObj<DataDeviceService>;
   let httpMock: HttpTestingController;
-  let store: MockStore<{
-    DateModel
-  }>;
+  // let store: MockStore<{
+  //   DataResponse
+  // }>;
   const initialState = {
     storeData: {
       isFetching: false,
@@ -61,7 +62,6 @@ describe('My Effects', () => {
   it('should work effect', () => {
 
     const dataFromService: DataResponse = {
-      number: 0,
       content: [
         {
           id: 2,
@@ -71,16 +71,15 @@ describe('My Effects', () => {
           purchaseDate: '23-01-2020',
           inUse: true,
           broken: false
-        }
-      ],
+        }],
       totalElements: 18,
       totalPages: 2,
       size: 10,
+      number: 0,
       numberOfElements: 10
     };
 
-    const dataInf = {
-      number: 0,
+    const dataInf: DataResponse = {
       content: [
         {
           id: 2,
@@ -90,11 +89,11 @@ describe('My Effects', () => {
           purchaseDate: '23-01-2020',
           inUse: true,
           broken: false
-        }
-      ],
+        }],
       totalElements: 18,
       totalPages: 2,
       size: 10,
+      number: 0,
       numberOfElements: 10
     };
 
@@ -128,4 +127,5 @@ describe('My Effects', () => {
     const expected = cold('--b', {b: completion});
     expect(effects.getData$).toBeObservable(expected);
   });
-});
+})
+;
