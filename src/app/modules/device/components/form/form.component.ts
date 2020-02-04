@@ -61,7 +61,6 @@ export class FormComponent implements OnInit {
       purchaseDate = '';
     }
     formData = {...this.myForm.value, purchaseDate};
-    console.log(formData);
     this.showSpinner = true;
     this.service.createDevice(formData).subscribe(addDevice => {
         this.showSpinner = false;

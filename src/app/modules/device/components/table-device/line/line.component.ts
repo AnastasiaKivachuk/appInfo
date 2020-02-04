@@ -19,8 +19,6 @@ export class LineComponent implements OnInit {
   @Output() onChanged = new EventEmitter<{ state: boolean, id: number }>();
 
   hideShowWindow(state: boolean, id: number) {
-    console.log(state);
-    console.log({state, id});
     this.onChanged.emit({state, id});
   }
 

@@ -41,14 +41,10 @@ export class DataEffects {
   getData$ = this.actions$.pipe(
     ofType(dataActions.FETCH),
     withLatestFrom(this.store.select(getDataPaginatorProperties)),
-    switchMap((data) => this.rootService.getAllDevice(data[1].currentPage, data[1].pageSize)
+    switchMap(([, {currentPage, pageSize}]) => this.rootService.getAllDevice(currentPage, pageSize)
       .pipe(
-        map((response: DataResponse) => {
-          const dataObject = response;
-          console.log(dataObject);
-          return new dataActions.Success(dataObject);
-        }),
-        catchError(() => of(new dataActions.Error('some error')))
+        map((response: DataResponse) => {console.log(response); return new dataActions.Success(response)}),
+        catchError((a) => {console.log(a); return of(new dataActions.Error('some error'))})
       )
     ),
   );

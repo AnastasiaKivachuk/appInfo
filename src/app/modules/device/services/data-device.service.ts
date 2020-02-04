@@ -22,7 +22,6 @@ export class DataDeviceService {
 
 
   getAllDevice(currentPage, pageSize) {
-    console.log(currentPage, pageSize);
     return this.http.get(`${this.mainUrl}/device/all?page=${currentPage + 1}&pageSize=${pageSize}`);
   }
 
@@ -35,7 +34,6 @@ export class DataDeviceService {
       inUse: formValue.inUse,
       broken: formValue.broken
     };
-    console.log(body);
     return this.http.put(`${this.mainUrl}/device/`, body);
   }
 
@@ -48,7 +46,6 @@ export class DataDeviceService {
   }
 
   editDevice(id, body) {
-    console.log(id, body);
     return this.http.patch(`${this.mainUrl}/device?id=${id}`, body);
   }
   showSuccess(message) {

@@ -33,8 +33,6 @@ export class TableDeviceComponent implements OnInit {
   onChanged({state, id}) {
     this.visibility = state;
     this.idDevice = id;
-    console.log(this.visibility);
-    console.log(this.idDevice);
   }
 
   getDeleteStatus(state) {
@@ -51,10 +49,7 @@ export class TableDeviceComponent implements OnInit {
 
   public handlePage(e: any) {
     this.currentPage = e.pageIndex;
-    // console.log(this.currentPage);
     this.pageSize = e.pageSize;
-    // console.log(this.pageSize);
-    console.log({currentPage: this.currentPage, pageSize: this.pageSize});
     this.store.dispatch(new dataActions.ChangePropertyOfPaginator({currentPage: this.currentPage, pageSize: this.pageSize}));
 
   }
