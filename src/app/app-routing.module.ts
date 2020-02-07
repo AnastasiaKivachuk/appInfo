@@ -10,7 +10,7 @@ import {DetailsPersonComponent} from './modules/person/components/details-person
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'device', pathMatch: 'full' },
+  { path: '', redirectTo: 'person-list', pathMatch: 'full' },
   { path: 'person-list', component: MainListPersonComponent },
   { path: 'person-list/edit:id', component: FormPersonComponent },
   { path: 'person-list/create', component: FormPersonComponent },

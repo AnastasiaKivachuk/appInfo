@@ -75,8 +75,8 @@
       <mat-label for="deviceName">Device</mat-label>
       <mat-select placeholder="Device" id="deviceName" type="text" name="deviceName"
                   formControlName="deviceName">
-        <mat-option *ngFor="let device of allDevice" [value]="device.name">
-          {{device.name}}
+        <mat-option *ngFor="let device of allDevice" [value]="device.serialNumber">
+          {{device.name}}{{device.serialNumber}}
         </mat-option>
       </mat-select>
     </mat-form-field>

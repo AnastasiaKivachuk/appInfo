@@ -65,25 +65,33 @@ import { FormPersonComponent } from './modules/person/components/form-person/for
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    // StoreModule.forRoot({
+    //   storeData: fromData.reducer
+    // }),
+    // StoreDevtoolsModule.instrument({maxAge: 5}),
+    // EffectsModule.forRoot([DataEffects])
+    // StoreModule.forRoot({storeDataPerson: fromDataPerson.reducer}),
     StoreModule.forRoot({
-      storeData: fromData.reducer
+      storeDataPerson: fromDataPerson.reducer
     }),
     StoreDevtoolsModule.instrument({maxAge: 5}),
-    EffectsModule.forRoot([DataEffects])
-    // // StoreModule.forRoot({storeDataPerson: fromDataPerson.reducer}),
+    EffectsModule.forRoot([DataEffectsPerson])
+
+
+
+
     // StoreModule.forRoot({storeDataDevice: fromData.reducer}),
-    //
-    // // StoreModule.forFeature('storeData', {
-    // //     storeDataDevice: fromData.reducer,
-    // //   storeDataPerson: fromDataPerson.reducer
-    // //   }
-    // //   // 'storeDataPerson', {
-    // //   //   storeDataPerson: fromDataPerson.reducer
-    // //   // }
-    // //   ),
+
+    // StoreModule.forFeature('storeData', {
+    //     storeDataDevice: fromData.reducer,
+    //   storeDataPerson: fromDataPerson.reducer
+    //   }
+    //   // 'storeDataPerson', {
+    //   //   storeDataPerson: fromDataPerson.reducer
+    //   // }
+    //   ),
     // StoreDevtoolsModule.instrument({maxAge: 5}),
-    // // EffectsModule.forRoot([DataEffectsPerson]),
-    // EffectsModule.forRoot([DataEffects])
+    // EffectsModule.forRoot([DataEffectsPerson]),
   ],
   providers: [DataDeviceService],
   bootstrap: [AppComponent]
