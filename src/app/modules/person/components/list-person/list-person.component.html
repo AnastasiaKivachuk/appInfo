@@ -1,0 +1,29 @@
+<app-button-with-spinner [name]="['Create']" [routerLink]="['/person-list/create']" > </app-button-with-spinner>
+
+
+
+<mat-list>
+  <mat-list-item>
+    <div class="cellIndex">№</div>
+    <div class="cell">Name</div>
+    <div class="cell">Organization</div>
+    <div class="cell">Phone number</div>
+    <div class="wrapButton"></div>
+  </mat-list-item>
+</mat-list>
+<div *ngIf="allPerson">
+  <mat-list *ngFor="let person of allPerson; let i = index">
+
+    <app-line-person [data]="person"
+              [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1"
+              (onChanged)="onChanged($event)"></app-line-person>
+  </mat-list>
+</div>
+<mat-paginator [length]="this.ObjDataPaginatorProperties.totalElements"
+               [pageSize]="this.ObjDataPaginatorProperties.pageSize"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               [showFirstLastButtons]="true"
+               (page)="pageEvent = handlePage($event)"
+>
+</mat-paginator>
+<app-dialog-window *ngIf="visibility" (onChanged)="getDeleteStatus($event)"></app-dialog-window>

@@ -1,4 +1,4 @@
-export interface DetailsDevice {
+export interface DetailsDeviceModel {
   id: number;
   name: string;
   serialNumber: string;

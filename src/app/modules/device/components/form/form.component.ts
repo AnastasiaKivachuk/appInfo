@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {DataDeviceService} from '../../services/data-device.service';
 import * as moment from 'moment';
-import {dataActions} from '../../store/action';
 import {Store} from '@ngrx/store';
-import {AppState, dataSelectors} from '../../store';
 import {ErrorStateMatcher} from '@angular/material';
+import * as _ from 'lodash';
+
+import {dataActions} from '../../store/action';
+import {AppState} from '../../store';
+import {DataDeviceService} from '../../services/data-device.service';
 
 class Matcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -22,8 +24,7 @@ export class FormComponent implements OnInit {
   myForm: FormGroup;
   matFormFieldMatcher = new Matcher();
   public nameButton = `Create device`;
-  public error = this.store.select(dataSelectors.getError);
-  public errorMessage = false;
+  public error: string;
   public showSpinner = false;
 
   constructor(public service: DataDeviceService,
@@ -33,10 +34,6 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.error.subscribe(data => {
-      console.log(data);
-    });
-
   }
 
   initForm() {
@@ -53,26 +50,19 @@ export class FormComponent implements OnInit {
   }
 
   submit() {
-    let formData;
-    let purchaseDate;
-    if (this.myForm.value.purchaseDate) {
-      purchaseDate = moment(this.myForm.value.purchaseDate).format('DD-MM-YYYY');
-    } else {
-      purchaseDate = '';
-    }
-    formData = {...this.myForm.value, purchaseDate};
+    const purchaseDate = this.myForm.value.purchaseDate ? moment(this.myForm.value.purchaseDate).format('DD-MM-YYYY') : '';
+    const formData = {...this.myForm.value, purchaseDate};
     this.showSpinner = true;
-    this.service.createDevice(formData).subscribe(addDevice => {
+    this.service.createDevice(formData).subscribe(() => {
         this.showSpinner = false;
         this.myForm.reset();
         this.store.dispatch(new dataActions.AddDevice(formData));
         this.service.showSuccess('New device successfully created!');
 
       },
-      error => {
-        this.store.dispatch(new dataActions.Error('some error'));
+      err => {
+        this.error =_.get(err, 'error.message', 'some error');
         this.myForm.reset();
-        this.errorMessage = true;
         this.showSpinner = false;
       });
   }

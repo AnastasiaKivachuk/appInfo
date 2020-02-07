@@ -1,11 +1,8 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
-import {DataDeviceService} from '../../../services/data-device.service';
 import {Router} from '@angular/router';
-import {DetailsDevice} from '../../../models/detailsDevice';
-import {dataActions} from '../../../store/action';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../../store';
-import {ToastrService} from 'ngx-toastr';
+
+import {DetailsDeviceModel} from '../../../models/detailsDevice.model';
+import {DataDeviceService} from '../../../services/data-device.service';
 
 @Component({
   selector: 'app-line',
@@ -13,7 +10,7 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./line.component.css']
 })
 export class LineComponent implements OnInit {
-  @Input() data: DetailsDevice;
+  @Input() data: DetailsDeviceModel;
   @Input() index: number;
 
   @Output() onChanged = new EventEmitter<{ state: boolean, id: number }>();
@@ -24,16 +21,14 @@ export class LineComponent implements OnInit {
 
 
   constructor(public service: DataDeviceService,
-              public router: Router,
-              private store: Store<AppState>,
-              private toastr: ToastrService) {
+              public router: Router) {
   }
 
   ngOnInit() {
   }
 
   edit(id) {
-    this.router.navigate([`/details/${id}`]);
+    this.router.navigate([`device/details/${id}`]);
   }
 
 

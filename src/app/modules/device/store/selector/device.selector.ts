@@ -3,7 +3,6 @@ import {createSelector, createFeatureSelector} from '@ngrx/store';
 import * as fromData from '../reducers/device.reducer';
 import {State} from '../../models';
 
-
 export const getState =
   createFeatureSelector<State>('storeData');
 

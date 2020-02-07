@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-dialog-window',
@@ -9,14 +9,15 @@ export class DialogWindowComponent implements OnInit {
   @Output() onChanged = new EventEmitter<boolean>();
   public nameButton = 'ОК';
   public showSpinner = false;
+  @Input() errorMessage: string;
 
   GetDeleteStatus(state: boolean) {
     this.onChanged.emit(state);
     this.showSpinner = state;
-    console.log(state);
   }
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

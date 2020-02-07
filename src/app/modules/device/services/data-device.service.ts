@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../environments/environment';
 import {Store} from '@ngrx/store';
-import {AppState, dataActions} from '../store';
 import {ToastrService} from 'ngx-toastr';
+
+import {AppState} from '../store';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,19 +27,11 @@ export class DataDeviceService {
   }
 
   createDevice(formValue) {
-    const body = {
-      name: formValue.name,
-      serialNumber: formValue.serialNumber,
-      organizationNumber: formValue.organizationNumber,
-      purchaseDate: formValue.purchaseDate,
-      inUse: formValue.inUse,
-      broken: formValue.broken
-    };
-    return this.http.put(`${this.mainUrl}/device/`, body);
+    return this.http.put(`${this.mainUrl}/device/`, formValue);
   }
 
   deleteDevice(id) {
-    return this.http.delete(`${this.mainUrl}/device/?id=${id}`)
+    return this.http.delete(`${this.mainUrl}/device/?id=${id}`);
   }
 
   getDetailsDevice(id) {

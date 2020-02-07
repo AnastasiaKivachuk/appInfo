@@ -18,6 +18,12 @@
                [pageSizeOptions]="[5, 10, 25, 100]"
                [showFirstLastButtons]="true"
                (page)="pageEvent = handlePage($event)"
+               [pageIndex]="ObjDataPaginatorProperties.currentPage"
+               *ngIf="allDevice"
 >
 </mat-paginator>
-<app-dialog-window *ngIf="visibility" (onChanged)="getDeleteStatus($event)"></app-dialog-window>
+<mat-card color="primary" *ngIf="error">
+  {{error}}
+
+</mat-card>
+<app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idDevice)" [errorMessage]="error"></app-dialog-window>

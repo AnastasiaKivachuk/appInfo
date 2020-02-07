@@ -1,12 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {DataDeviceService} from '../../services/data-device.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DetailsDevice} from '../../models/detailsDevice';
 import * as moment from 'moment';
-import {dataActions} from '../../store/action';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../store';
+import * as _ from 'lodash';
+
+import {DetailsDeviceModel} from '../../models/detailsDevice.model';
+import {DataDeviceService} from '../../services/data-device.service';
 
 @Component({
   selector: 'app-details',
@@ -14,35 +13,31 @@ import {AppState} from '../../store';
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent implements OnInit {
-  public dataDetails: DetailsDevice;
-  public updateDetales: DetailsDevice;
+  public dataDetails: DetailsDeviceModel;
+  public updateDetails: DetailsDeviceModel;
   public updateForm: FormGroup;
-  public errorMessage = false;
+  public error: string;
   public showSpinner = false;
-  public nameButton = `Update device`;
 
   constructor(public service: DataDeviceService,
               public router: Router,
               private route: ActivatedRoute,
-              private fb: FormBuilder,
-              private store: Store<AppState>
+              private fb: FormBuilder
   ) {
 
   }
 
   ngOnInit() {
     this.service.getDetailsDevice(this.route.snapshot.paramMap.get('id'))
-      .subscribe((data: DetailsDevice) => {
-        let NullOrDAte;
-        data.purchaseDate ? NullOrDAte = (moment(data.purchaseDate, 'DD-MM-YYYY').format()) : NullOrDAte = null;
+      .subscribe((data: DetailsDeviceModel) => {
+        const NullOrDAte = data.purchaseDate ? (moment(data.purchaseDate, 'DD-MM-YYYY').format()) : null;
         this.dataDetails = {...data, purchaseDate: NullOrDAte};
         this.initForm(this.dataDetails);
       });
-
   }
 
 
-  initForm(defaultDate) {
+  initForm(defaultDate: DetailsDeviceModel) {
     this.updateForm = this.fb.group({
       id: [defaultDate.id, [Validators.required]],
       name: [defaultDate.name, [Validators.required]],
@@ -56,29 +51,24 @@ export class DetailsComponent implements OnInit {
 
   submit() {
     const bodyRequest = {};
-    let NullOrDAte;
-    (this.updateForm.value.purchaseDate === null) ? NullOrDAte = null : NullOrDAte = moment(this.updateForm.value.purchaseDate).format('DD-MM-YYYY');
-    this.updateDetales = {...this.updateForm.value, purchaseDate: NullOrDAte};
+    const NullOrDAte = (this.updateForm.value.purchaseDate === null) ? null : moment(this.updateForm.value.purchaseDate).format('DD-MM-YYYY');
+    this.updateDetails = {...this.updateForm.value, purchaseDate: NullOrDAte};
     Object.keys(this.dataDetails).forEach(key => {
-        if (this.dataDetails[key] !== this.updateDetales[key]) {
-          bodyRequest[key] = this.updateDetales[key];
+        if (this.dataDetails[key] !== this.updateDetails[key]) {
+          bodyRequest[key] = this.updateDetails[key];
         }
       }
     );
     this.showSpinner = true;
-    this.service.editDevice(this.updateDetales.id, bodyRequest).subscribe(addDevice => {
+    this.service.editDevice(this.updateDetails.id, bodyRequest).subscribe(() => {
         this.service.showSuccess('Device successfully updated!');
         this.showSpinner = false;
       },
-      error => {
-        this.store.dispatch(new dataActions.Error('some error'));
-        this.errorMessage = true;
+      err => {
+        this.error =_.get(err, 'error.message', '\n' +
+          '        Can\'t update device');
         this.showSpinner = false;
       });
-  }
-
-  back() {
-    this.router.navigate([`/device`]);
   }
 
 }

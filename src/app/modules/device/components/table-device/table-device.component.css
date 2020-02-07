@@ -7,3 +7,7 @@
 mat-list-item{
   background: #DCDCDC;
 }
+mat-card{
+  width: 50vw;
+  margin: 0 auto;
+}

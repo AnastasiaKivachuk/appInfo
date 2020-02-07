@@ -1,0 +1,37 @@
+h3{
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  margin: 0 2vw 0 0 ;
+  color: dimgrey;
+  border-bottom: dimgrey 1px solid;
+}
+h2{
+  text-align: center;
+}
+
+.information{
+margin-top: 20px;
+}
+
+mat-form-field {
+  width: 28vw;
+  min-width: 300px;
+  margin-right: 20px;
+}
+
+h6{
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  margin: 0 2vw 0 0 ;
+  color: dimgrey;
+  /*border-bottom: dimgrey 1px solid;*/
+}
+
+/*button {*/
+/*  box-sizing: border-box;*/
+/*  height: 50px;*/
+/*  position: relative;*/
+/*  bottom: 0;*/
+/*}*/
+
+/*.alert-danger{*/
+/*  color: red;*/
+/*}*/

@@ -1,5 +1,6 @@
 import {Action} from '@ngrx/store';
-import {DataResponse} from '../../models';
+
+import {DataResponse, DetailsDeviceModel} from '../../models';
 
 export const FETCH = '[device] Fetch';
 export const ERROR = '[device] Error';
@@ -22,17 +23,7 @@ export class Error implements Action {
 export class Success implements Action {
   readonly type = SUCCESS;
 
-  constructor(public payload: DataResponse
-  //               {
-  //   number: number;
-  //   size: number;
-  //   currentPage: number;
-  //   pageSize: number;
-  //   totalPages: number;
-  //   totalElements: number;
-  //   content: [];
-  // }
-  ) {
+  constructor(public payload: DataResponse) {
   }
 }
 
@@ -54,7 +45,7 @@ export class DeleteDevice implements Action {
 export class AddDevice implements Action {
   readonly type = ADD;
   constructor(public payload: {
-    content: [];
+    content: [DetailsDeviceModel];
   }) {
   }
 }

@@ -3,10 +3,9 @@ import {Actions, Effect, ofType} from '@ngrx/effects';
 import {of} from 'rxjs';
 import {catchError, map, mapTo, switchMap, withLatestFrom} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
+import * as _ from 'lodash';
 
 import * as dataActions from '../action/device.action';
-// import {AppState} from '../app.state';
-// import {objDate} from '../selector/data.selectors';
 import {DataDeviceService} from '../../services/data-device.service';
 import {DataResponse} from '../../models';
 import {AppState} from '../app.state';
@@ -43,8 +42,10 @@ export class DataEffects {
     withLatestFrom(this.store.select(getDataPaginatorProperties)),
     switchMap(([, {currentPage, pageSize}]) => this.rootService.getAllDevice(currentPage, pageSize)
       .pipe(
-        map((response: DataResponse) => {console.log(response); return new dataActions.Success(response)}),
-        catchError((a) => {console.log(a); return of(new dataActions.Error('some error'))})
+        map((response: DataResponse) => new dataActions.Success(response)),
+        catchError((err) => {
+          return of(new dataActions.Error(_.get(err, 'error.message', 'some error')));
+        })
       )
     ),
   );

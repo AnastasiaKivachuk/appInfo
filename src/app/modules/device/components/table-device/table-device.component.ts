@@ -1,10 +1,12 @@
-import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
-import {DataDeviceService} from '../../services/data-device.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material';
-import {DataResponse} from '../../models/response';
-import {dataActions} from '../../store/action';
 import {Store} from '@ngrx/store';
+import * as _ from 'lodash';
+
+import {DataDeviceService} from '../../services/data-device.service';
+import {dataActions} from '../../store/action';
 import {AppState, dataSelectors} from '../../store';
+import {DetailsDeviceModel} from '../../models';
 
 @Component({
   selector: 'app-table-device',
@@ -12,34 +14,19 @@ import {AppState, dataSelectors} from '../../store';
   styleUrls: ['./table-device.component.css']
 })
 export class TableDeviceComponent implements OnInit {
-  public allDevice: any;
-  public getPageDataDevice = this.store.select(dataSelectors.getPageDataDevice);
-  // public totalElements = 100;
-  // public totalPages = 5;
-  public currentPage: number;
-  public pageSize: number;
+  public allDevice: [DetailsDeviceModel];
   public visibility = false;
-  public stateDelete = false;
   public idDevice: number;
-  public DataPaginatorProperties = this.store.select(dataSelectors.getDataPaginatorProperties);
+  public error: string;
+
   public ObjDataPaginatorProperties: {
     currentPage: number;
     pageSize: number;
     totalElements: number;
   };
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   pageEvent: void;
-
-  onChanged({state, id}) {
-    this.visibility = state;
-    this.idDevice = id;
-  }
-
-  getDeleteStatus(state) {
-    this.stateDelete = state;
-    this.visibility = false;
-    this.delete(this.stateDelete, this.idDevice);
-  }
 
   constructor(
     public service: DataDeviceService,
@@ -47,32 +34,37 @@ export class TableDeviceComponent implements OnInit {
   ) {
   }
 
-  public handlePage(e: any) {
-    this.currentPage = e.pageIndex;
-    this.pageSize = e.pageSize;
-    this.store.dispatch(new dataActions.ChangePropertyOfPaginator({currentPage: this.currentPage, pageSize: this.pageSize}));
-
-  }
-
   ngOnInit() {
     this.store.dispatch(new dataActions.Fetch());
-    this.getPageDataDevice.subscribe((data) => {
-      this.allDevice = data;
-    });
-    this.DataPaginatorProperties.subscribe((data) => {
-      this.ObjDataPaginatorProperties = data;
-    });
+    this.store.select(dataSelectors.getPageDataDevice).subscribe(data => this.allDevice = data);
+    this.store.select(dataSelectors.getError).subscribe(data => this.error = data);
+    this.store.select(dataSelectors.getDataPaginatorProperties).subscribe(data => this.ObjDataPaginatorProperties = data);
+  }
+
+  onChanged({state, id}) {
+    this.visibility = state;
+    this.idDevice = id;
+  }
+
+  public handlePage(e: any) {
+    this.store.dispatch(new dataActions.ChangePropertyOfPaginator({currentPage: e.pageIndex, pageSize: e.pageSize}));
   }
 
   delete(state, id) {
+    this.error = '';
     if (state === true) {
       this.service.deleteDevice(id).subscribe(selectedDevice => {
           this.store.dispatch(new dataActions.DeleteDevice());
           this.service.showSuccess('Device successfully deleted!');
+          this.visibility = false;
         },
-        error => {
-          this.store.dispatch(new dataActions.Error('some error'));
+        err => {
+          {
+            this.error = _.get(err, 'error.message', 'some error');
+          }
         });
+    } else {
+      this.visibility = false;
     }
   }
 

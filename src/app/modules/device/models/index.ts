@@ -1,4 +1,4 @@
 export * from './state.model';
-export * from './detailsDevice';
+export * from './detailsDevice.model';
 export * from './paginator.model';
-export * from './response';
+export * from './response.model';
