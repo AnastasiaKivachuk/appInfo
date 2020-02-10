@@ -28,8 +28,8 @@ export class LinePersonComponent implements OnInit {
   ngOnInit() {
   }
 
-  edit(id) {
-    this.router.navigate([`device/details/${id}`]);
+  open(id) {
+    this.router.navigate([`person-list/details//${id}`]);
   }
 
 }

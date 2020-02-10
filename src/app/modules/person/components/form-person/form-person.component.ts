@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 
 import {AppState, dataActionsPerson} from '../../../person/store';
 import {DataPersonService} from '../../services/data-person.service';
-import {OrganizationModel} from '../../models';
+import {ContactModel, DetailsDeviceModel, OrganizationModel} from '../../models';
 
 
 class Matcher implements ErrorStateMatcher {
@@ -29,8 +29,10 @@ export class FormPersonComponent implements OnInit {
   public nameButton = `Create device`;
   public error: string;
   public showSpinner = false;
-  public allOrganization = [{name: 'LWO'}, {name: '123'}];
-  public allDevice = [{name: '123'}, {name: '234'}];
+  // public allOrganization = [{name: 'LWO'}, {name: '123'}];
+  public allOrganization: OrganizationModel;
+  // public allDevice = [{name: '123'}, {name: '234'}];
+  public allDevice: DetailsDeviceModel;
 
   constructor(public service: DataPersonService,
               private store: Store<AppState>,
@@ -38,9 +40,12 @@ export class FormPersonComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.service.getOrganization(1,30).subscribe(data => {
-    //   this.allOrganization = data;
-    // })
+    this.service.getOrganization(1, 30).subscribe(data => {
+      this.allOrganization = data.content;
+    });
+    this.service.getDevice(1, 30).subscribe(data => {
+      this.allDevice = data.content;
+    });
     this.initForm();
   }
 
@@ -74,20 +79,34 @@ export class FormPersonComponent implements OnInit {
 
   submit() {
     const birthDate = this.formPerson.value.birthDate ? moment(this.formPerson.value.birthDate).format('DD-MM-YYYY') : '';
-    const formData = {...this.formPerson.value, birthDate};
+    // const formData = {...this.formPerson.value, birthDate, organization: {name: this.formPerson.value.orientation}};
+    const formData = {
+      name: this.formPerson.value.name,
+      middleName: this.formPerson.value.middleName,
+      lastName: this.formPerson.value.lastName,
+      birthDate: this.formPerson.value.birthDate,
+      organization: {id: this.formPerson.value.organizationName},
+      privateNumber: this.formPerson.value.privateNumber,
+      passportSeries: this.formPerson.value.passportSeries,
+      passportNumber: this.formPerson.value.passportNumber,
+      description: this.formPerson.value.description,
+      // contacts: {id: this.formPerson.value.organizationName},
+      // devices: [{od}],
+    };
     console.log(formData);
     this.showSpinner = true;
-    // this.service.createPerson(formData).subscribe(() => {
-    //     this.showSpinner = false;
-    //     this.formPerson.reset();
-    //     this.store.dispatch(new dataActionsPerson.AddPerson(formData));
-    //     this.service.showSuccess('New person successfully created!');
-    //   },
-    //   err => {
-    //     this.error = _.get(err, 'error.message', 'some error');
-    //     this.formPerson.reset();
-    //     this.showSpinner = false;
-    //   });
+    this.service.createPerson(formData).subscribe(() => {
+        this.showSpinner = false;
+        this.formPerson.reset();
+        this.store.dispatch(new dataActionsPerson.AddPerson(formData));
+        this.service.showSuccess('New person successfully created!');
+      },
+      err => {
+        this.error = _.get(err, 'error.message', 'some error');
+        this.formPerson.reset();
+        this.showSpinner = false;
+        console.log(err);
+      });
   }
 }
 

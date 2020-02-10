@@ -40,7 +40,7 @@
       <mat-label for="organizationName">Organization</mat-label>
       <mat-select placeholder="Organization name" required id="organizationName" type="text" name="organizationName"
                   formControlName="organizationName" [errorStateMatcher]="matFormFieldMatcher">
-        <mat-option *ngFor="let organization of allOrganization" [value]="organization.name">
+        <mat-option *ngFor="let organization of allOrganization" [value]="organization.id">
           {{organization.name}}
         </mat-option>
       </mat-select>
@@ -75,8 +75,8 @@
       <mat-label for="deviceName">Device</mat-label>
       <mat-select placeholder="Device" id="deviceName" type="text" name="deviceName"
                   formControlName="deviceName">
-        <mat-option *ngFor="let device of allDevice" [value]="device.serialNumber">
-          {{device.name}}{{device.serialNumber}}
+        <mat-option *ngFor="let device of allDevice" [value]="device.id">
+          {{device.name}} {{device.serialNumber}}
         </mat-option>
       </mat-select>
     </mat-form-field>

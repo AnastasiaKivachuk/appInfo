@@ -23,14 +23,17 @@ export class DataPersonService {
   }
 
   createPerson(body) {
-    return this.http.put(`${this.mainUrl}/person/}`, body);
+    return this.http.put(`${this.mainUrl}/person`, body);
   }
 
 
   getOrganization(currentPage, pageSize) {
-    return this.http.get(`${this.mainUrl}/organization/all?page=${currentPage + 1}&pageSize=${pageSize}`);
+    return this.http.get(`${this.mainUrl}/organization/all?page=${currentPage}&pageSize=${pageSize}`);
   }
 
+  getDevice(currentPage, pageSize) {
+    return this.http.get(`${this.mainUrl}/device/all?page=${currentPage}&pageSize=${pageSize}`);
+  }
 
   deletePerson(id) {
     return this.http.delete(`${this.mainUrl}/person/?id=${id}`);

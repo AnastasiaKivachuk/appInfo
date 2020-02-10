@@ -1,4 +1,4 @@
-<mat-list-item>
+<mat-list-item (click)="open(this.data.id)">
   <div class="cellIndex">{{this.index}}</div>
   {{this.data.lastName}} <br>
   <div class="cell">{{this.data.name}} {{this.data.middleName}}

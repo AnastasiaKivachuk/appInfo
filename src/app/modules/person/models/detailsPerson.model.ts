@@ -12,7 +12,7 @@ export interface DetailsPersonModel {
   privateNumber: string;
   passportSeries: string;
   passportNumber: number;
-  description: string,
+  description: string;
   contacts: [ContactModel];
   devices: [DetailsDeviceModel];
 }

@@ -79,9 +79,6 @@ export class ListPersonComponent implements OnInit {
   }
 
 
-  edit(id) {
-    console.log(id);
-    // this.router.navigate([`person/details/${id}`]);
-  }
+
 
 }
