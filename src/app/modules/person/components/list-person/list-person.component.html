@@ -26,4 +26,4 @@
                (page)="pageEvent = handlePage($event)"
 >
 </mat-paginator>
-<app-dialog-window *ngIf="visibility" (onChanged)="getDeleteStatus($event)"></app-dialog-window>
+<app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idPerson)" [errorMessage]="error"></app-dialog-window>

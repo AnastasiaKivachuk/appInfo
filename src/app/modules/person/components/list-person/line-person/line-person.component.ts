@@ -29,7 +29,11 @@ export class LinePersonComponent implements OnInit {
   }
 
   open(id) {
-    this.router.navigate([`person-list/details//${id}`]);
+    this.router.navigate([`person-list/details/${id}`]);
   }
 
+  edit(id) {
+    console.log(id);
+    this.router.navigate([`person-list/edit/${id}`]);
+  }
 }

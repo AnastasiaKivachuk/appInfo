@@ -8,7 +8,7 @@ export const getState =
   createFeatureSelector<State>('storeDataPerson');
 
 
-export const getPageDataDevice = createSelector(
+export const getPageData = createSelector(
   getState,
   fromData.getData,
 );

@@ -53,7 +53,7 @@ export class TableDeviceComponent implements OnInit {
   delete(state, id) {
     this.error = '';
     if (state === true) {
-      this.service.deleteDevice(id).subscribe(selectedDevice => {
+      this.service.deleteDevice(id).subscribe(() => {
           this.store.dispatch(new dataActions.DeleteDevice());
           this.service.showSuccess('Device successfully deleted!');
           this.visibility = false;

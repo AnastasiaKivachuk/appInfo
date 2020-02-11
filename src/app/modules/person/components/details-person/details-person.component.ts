@@ -10,8 +10,8 @@ import {DetailsPersonModel} from '../../models';
   styleUrls: ['./details-person.component.css']
 })
 export class DetailsPersonComponent implements OnInit {
-  public person: DetailsPersonModel;
-  // public person: any;
+  public person: any;
+
   constructor(public service: DataPersonService,
               public router: Router,
               private route: ActivatedRoute) {
@@ -20,7 +20,7 @@ export class DetailsPersonComponent implements OnInit {
   ngOnInit() {
     this.service.getDetailsPerson(this.route.snapshot.paramMap.get('id')).subscribe(data => {
       this.person = data;
-    })
+    });
 
   }
 

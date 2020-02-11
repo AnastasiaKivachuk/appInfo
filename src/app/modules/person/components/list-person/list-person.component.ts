@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import {DataPersonService} from '../../services/data-person.service';
 import {AppState, dataActionsPerson, dataSelectorsPerson} from '../../store';
 import {Router} from '@angular/router';
+import {dataSelectors} from '../../../device/store/selector';
 
 @Component({
   selector: 'app-list-person',
@@ -31,10 +32,10 @@ export class ListPersonComponent implements OnInit {
 
   }
 
-  getDeleteStatus(state) {
-    this.visibility = false;
-    this.delete(state, this.idPerson);
-  }
+  // getDeleteStatus(state) {
+  //   this.visibility = false;
+  //   this.delete(state, this.idPerson);
+  // }
 
 
   constructor(
@@ -49,11 +50,11 @@ export class ListPersonComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.idPerson);
     this.store.dispatch(new dataActionsPerson.Fetch());
-    this.store.select(dataSelectorsPerson.getPageDataDevice).subscribe((data) => {
+    this.store.select(dataSelectorsPerson.getPageData).subscribe((data) => {
       this.allPerson = data;
     });
+    this.store.select(dataSelectorsPerson.getError).subscribe(data => this.error = data);
     this.store.select(dataSelectorsPerson.getDataPaginatorProperties).subscribe((data) => {
       this.ObjDataPaginatorProperties = data;
     });
@@ -63,7 +64,7 @@ export class ListPersonComponent implements OnInit {
   delete(state, id) {
     this.error = '';
     if (state === true) {
-      this.service.deletePerson(id).subscribe(selectedDevice => {
+      this.service.deletePerson(id).subscribe(() => {
           this.store.dispatch(new dataActionsPerson.DeletePerson());
           this.service.showSuccess('Device successfully deleted!');
           this.visibility = false;
@@ -77,8 +78,6 @@ export class ListPersonComponent implements OnInit {
       this.visibility = false;
     }
   }
-
-
 
 
 }

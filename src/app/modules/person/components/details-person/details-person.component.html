@@ -1,5 +1,5 @@
 <div *ngIf="person" class="mainWrap">
-  <app-button-with-spinner [name]="['Back']" [routerLink]="['/person-list']" > </app-button-with-spinner>
+  <app-button-with-spinner [name]="['Back']" [routerLink]="['/person-list']"></app-button-with-spinner>
   <h2>Information about {{person.name}} {{person.lastName}}</h2>
   <h3>General information</h3>
   <div class="information">
@@ -16,7 +16,7 @@
   <div class="information">
     <div><p>Organization name: </p>{{person.organization.name}}</div>
     <div><p>Organization owner form: </p>{{person.organization.ownerForm}}</div>
-    <div *ngFor="let address of person.organization.address; let i=index"><p>{{i+1}}.Organization address:</p>
+    <div *ngFor="let address of person.organization.address; let i=index"><p>{{i + 1}}.Organization address:</p>
       <div><p>Country: </p>{{address.country}}</div>
       <div><p>Сity: </p>{{address.city}}</div>
       <div><p>Street: </p>{{address.street}}</div>
@@ -33,7 +33,7 @@
     <div><p>Passport number: </p>{{person.passportNumber}}</div>
   </div>
 
-  <h3>Devices</h3>
+  <h3 *ngIf="person.devices.length>0">Devices</h3>
   <div class="information" *ngFor="let device of person.devices">
 
     <div><p>Device: </p>{{device.name}} </div>
@@ -43,7 +43,7 @@
     <div><p>Device in use: </p>{{device.inUse}} </div>
     <div><p>Device broken: </p>{{device.broken}} </div>
   </div>
-  <h3>Contacts</h3>
+  <h3 *ngIf="person.contacts.length>0">Contacts</h3>
   <div class="information" *ngFor="let contact of person.contacts">
     <div><p>Site: </p>{{contact.site}}</div>
     <div><p>Email: </p>{{contact.email}}</div>

@@ -19,6 +19,7 @@ import {
 } from './index';
 import {SharedModule} from '../shared/shared.module';
 import {MyMaterialModule} from '../../material.module';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {MyMaterialModule} from '../../material.module';
     CommonModule,
     ReactiveFormsModule,
     StoreModule.forFeature('storeData', fromData.reducer),
-    EffectsModule.forFeature([DataEffects])
+    EffectsModule.forFeature([DataEffects]),
+    RouterModule
 
   ],
   providers: [DataDeviceService],

@@ -35,3 +35,12 @@ h6{
 /*.alert-danger{*/
 /*  color: red;*/
 /*}*/
+.back {
+  position: absolute;
+  top: 0;
+}
+
+.alert{
+  margin: 0;
+  color: red;
+}

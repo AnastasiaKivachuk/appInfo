@@ -1,42 +1,56 @@
 <!--<h2>{{namePage}}</h2>-->
+<app-button-with-spinner class="back" [name]="['Back']" [routerLink]="['/person-list']"></app-button-with-spinner>
 <h2>Create new person</h2>
 <form [formGroup]="formPerson" novalidate (ngSubmit)="submit()" class="login-form">
   <h3>General information</h3>
   <div class="information">
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="name">Name:</mat-label>
       <input matInput placeholder="Name" required id="name" type="text" name="name" formControlName="name"
              [errorStateMatcher]="matFormFieldMatcher">
+      <div class="alert alert-danger"
+           *ngIf="formPerson.controls['name'].invalid && formPerson.controls['name'].touched">
+        Type name
+      </div>
     </mat-form-field>
 
-    <mat-form-field >
+
+    <mat-form-field>
       <mat-label for="middleName">Middle name:</mat-label>
       <input matInput placeholder="Middle name" id="middleName" type="text" name="middleName"
              formControlName="middleName">
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="lastName">Last name:</mat-label>
       <input matInput placeholder="Last name" required id="lastName" type="text" name="lastName"
              formControlName="lastName" [errorStateMatcher]="matFormFieldMatcher">
+      <div class="alert alert-danger"
+           *ngIf="formPerson.controls['lastName'].invalid && formPerson.controls['lastName'].touched">
+        Type last name
+      </div>
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="birthDate">Select birth date:</mat-label>
       <input matInput [matDatepicker]="myDatepicker" placeholder="Select birth date" required id="birthDate"
              name="birthDate" formControlName="birthDate" [errorStateMatcher]="matFormFieldMatcher">
       <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #myDatepicker></mat-datepicker>
+      <div class="alert alert-danger"
+           *ngIf="formPerson.controls['birthDate'].invalid && formPerson.controls['birthDate'].touched">
+        Select birth date
+      </div>
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="description">Description:</mat-label>
       <input matInput placeholder="Description" id="description" type="text" name="description"
              formControlName="description">
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="organizationName">Organization</mat-label>
       <mat-select placeholder="Organization name" required id="organizationName" type="text" name="organizationName"
                   formControlName="organizationName" [errorStateMatcher]="matFormFieldMatcher">
@@ -50,28 +64,40 @@
   <h3>Passport information</h3>
   <div class="information">
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="privateNumber">Private number:</mat-label>
       <input matInput placeholder="Private number" required id="privateNumber" type="text" name="privateNumber"
              formControlName="privateNumber" [errorStateMatcher]="matFormFieldMatcher">
+      <div class="alert alert-danger"
+           *ngIf="formPerson.controls['privateNumber'].invalid && formPerson.controls['privateNumber'].touched">
+        Type private number
+      </div>
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="passportSeries">Passport series:</mat-label>
       <input matInput placeholder="Passport series" required id="passportSeries" type="text" name="passportSeries"
              formControlName="passportSeries" [errorStateMatcher]="matFormFieldMatcher">
+      <div class="alert alert-danger"
+           *ngIf="formPerson.controls['passportSeries'].invalid && formPerson.controls['passportSeries'].touched">
+        Type passport series, like 'AA'
+      </div>
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="passportNumber">Passport number:</mat-label>
       <input matInput placeholder="Passport number" required id="passportNumber" type="text" name="passportNumber"
              formControlName="passportNumber" [errorStateMatcher]="matFormFieldMatcher">
+      <div class="alert alert-danger"
+           *ngIf="formPerson.controls['passportNumber'].invalid && formPerson.controls['passportNumber'].touched">
+        Type passport number, like '111111'
+      </div>
     </mat-form-field>
   </div>
 
   <h3>Devices</h3>
   <div class="information">
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="deviceName">Device</mat-label>
       <mat-select placeholder="Device" id="deviceName" type="text" name="deviceName"
                   formControlName="deviceName">
@@ -81,97 +107,139 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <!--  <button type="button" (click)="addDevices()">Add</button>-->
+  <!--  <div formArrayName="devices"-->
+  <!--       *ngFor="let device of formPerson.controls.devices?; let i = index" class="information">-->
+  <!--    <div [formGroupName]="i">-->
+  <!--          <mat-form-field >-->
+  <!--            <mat-label for="id">Device</mat-label>-->
+  <!--            <mat-select placeholder="Device" id="id" type="text" name="id"-->
+  <!--                        formControlName="id">-->
+  <!--              <input formControlName="id" placeholder="Item name">-->
+  <!--&lt;!&ndash;              <mat-option *ngFor="let deviceSelect of allDevice" [value]="deviceSelect.id">&ndash;&gt;-->
+  <!--&lt;!&ndash;                {{deviceSelect.name}} {{deviceSelect.serialNumber}}&ndash;&gt;-->
+  <!--&lt;!&ndash;              </mat-option>&ndash;&gt;-->
+  <!--            </mat-select>-->
+  <!--          </mat-form-field>-->
+
+  <!--      <input formControlName="id" placeholder="Item name">-->
+  <!--      <input formControlName="description" placeholder="Item description">-->
+  <!--      <input formControlName="price" placeholder="Item price">-->
+  <!--    </div>-->
+
+  <!--    Chosen name: {{ orderForm.controls.items.controls[i].controls.name.value }}-->
+  <!--  </div>-->
 
   <h3>Contacts</h3>
+  <button type="button" (click)="addContact()">Add</button>
   <div class="information">
+    <div formArrayName="contacts" *ngFor="let contact of formPerson.controls.contacts.value; let i = index">
+      <ng-container [formGroupName]="i">
+        {{i}}
+        <mat-form-field>
+          <mat-label>Site:</mat-label>
+          <input matInput placeholder="Site" type="text" name="site" formControlName="site">
+        </mat-form-field>
 
-    <mat-form-field >
-      <mat-label for="site">Site:</mat-label>
-      <input matInput placeholder="Site" id="site" type="text" name="site" formControlName="site">
-    </mat-form-field>
-
-    <mat-form-field >
-      <mat-label for="email">Email:</mat-label>
-      <input matInput placeholder="Email" id="email" type="text" name="email"
-             formControlName="email">
-    </mat-form-field>
-
+        <mat-form-field>
+          <mat-label>Email:</mat-label>
+          <input matInput placeholder="Email" type="text" name="email"
+                 formControlName="email">
+          <!--      <div class="alert alert-danger"-->
+          <!--           *ngIf="formPerson.controls['email'].invalid && formPerson.controls['email'].touched">-->
+          <!--        Type email, like 'aaa@gmail.com'-->
+          <!--      </div>-->
+        </mat-form-field>
+      </ng-container>
+    </div>
     <h6>Address</h6>
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="county">County:</mat-label>
       <input matInput placeholder="County" required id="county" type="text" name="county"
              formControlName="county" [errorStateMatcher]="matFormFieldMatcher">
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="city">City:</mat-label>
       <input matInput placeholder="City" required id="city" type="text" name="city"
-             formControlName="city"  [errorStateMatcher]="matFormFieldMatcher">
+             formControlName="city" [errorStateMatcher]="matFormFieldMatcher">
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="street">Street:</mat-label>
       <input matInput placeholder="Street" required id="street" type="text" name="street"
              formControlName="street" [errorStateMatcher]="matFormFieldMatcher">
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="streetType">Street type:</mat-label>
       <input matInput placeholder="Street type" id="streetType" type="text" name="streetType"
-             formControlName="streetType" >
+             formControlName="streetType">
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="houseNumber">House number:</mat-label>
       <input matInput placeholder="House number" required id="houseNumber" type="text" name="houseNumber"
              formControlName="houseNumber" [errorStateMatcher]="matFormFieldMatcher">
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="entranceNumber">Entrance number:</mat-label>
       <input matInput placeholder="Entrance number" id="entranceNumber" type="text" name="entranceNumber"
-             formControlName="entranceNumber" >
+             formControlName="entranceNumber">
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field>
       <mat-label for="apartmentNumber">Apartment number:</mat-label>
       <input matInput placeholder="Apartment number" id="apartmentNumber" type="text" name="apartmentNumber"
-             formControlName="apartmentNumber" >
+             formControlName="apartmentNumber">
     </mat-form-field>
   </div>
 
   <h6>Phones</h6>
-  <mat-form-field >
+  <mat-form-field>
     <mat-label for="prefix">Prefix:</mat-label>
     <input matInput placeholder="Prefix" required id="prefix" type="text" name="prefix"
            formControlName="prefix" [errorStateMatcher]="matFormFieldMatcher">
+    <div class="alert alert-danger"
+         *ngIf="formPerson.controls['prefix'].invalid && formPerson.controls['prefix'].touched">
+      Type prefix, like '375'
+    </div>
   </mat-form-field>
 
-  <mat-form-field >
+  <mat-form-field>
     <mat-label for="code">Code:</mat-label>
     <input matInput placeholder="Code" required id="code" type="text" name="code"
-           formControlName="code"  [errorStateMatcher]="matFormFieldMatcher">
+           formControlName="code" [errorStateMatcher]="matFormFieldMatcher">
+    <div class="alert alert-danger"
+         *ngIf="formPerson.controls['code'].invalid && formPerson.controls['code'].touched">
+      Type code, like '29'
+    </div>
   </mat-form-field>
 
-  <mat-form-field >
+  <mat-form-field>
     <mat-label for="number">Number:</mat-label>
     <input matInput placeholder="Number" required id="number" type="text" name="number"
            formControlName="number" [errorStateMatcher]="matFormFieldMatcher">
+    <div class="alert alert-danger"
+         *ngIf="formPerson.controls['number'].invalid && formPerson.controls['number'].touched">
+      Type number, like '1111111'
+    </div>
   </mat-form-field>
 
-  <mat-form-field >
+  <mat-form-field>
     <mat-label for="operator">Operator:</mat-label>
     <input matInput placeholder="Operator" id="operator" type="text" name="operator"
-           formControlName="operator" >
+           formControlName="operator">
   </mat-form-field>
 
 
   <div class="columnButton">
-      <app-button-with-spinner [name]="this.nameButton" [disabled]="formPerson.invalid || formPerson.untouched"
-                               [showSpinner]="this.showSpinner"></app-button-with-spinner>
-      <div class="alert alert-danger"
-           *ngIf="error">
-        {{error}}
-      </div>
+    <app-button-with-spinner [name]="this.nameButton" [disabled]="formPerson.invalid || formPerson.untouched"
+                             [showSpinner]="this.showSpinner"></app-button-with-spinner>
+    <div class="alert alert-danger"
+         *ngIf="error">
+      {{error}}
     </div>
+  </div>
 </form>
