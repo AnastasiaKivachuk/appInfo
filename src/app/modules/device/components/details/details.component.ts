@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 
 import {DetailsDeviceModel} from '../../models/detailsDevice.model';
 import {DataDeviceService} from '../../services/data-device.service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-details',
@@ -14,26 +15,28 @@ import {DataDeviceService} from '../../services/data-device.service';
 })
 export class DetailsComponent implements OnInit {
   public dataDetails: DetailsDeviceModel;
-  public updateDetails: DetailsDeviceModel;
   public updateForm: FormGroup;
   public error: string;
+  public errorCard: string;
   public showSpinner = false;
+  public isFetching = true;
 
   constructor(public service: DataDeviceService,
               public router: Router,
               private route: ActivatedRoute,
               private fb: FormBuilder
   ) {
-
   }
 
   ngOnInit() {
     this.service.getDetailsDevice(this.route.snapshot.paramMap.get('id'))
+      .pipe(finalize(() => this.isFetching = false))
       .subscribe((data: DetailsDeviceModel) => {
         const NullOrDAte = data.purchaseDate ? (moment(data.purchaseDate, 'DD-MM-YYYY').format()) : null;
         this.dataDetails = {...data, purchaseDate: NullOrDAte};
         this.initForm(this.dataDetails);
-      });
+      }, err => this.errorCard = _.get(err, 'error.message', '\n' +
+          '        Some error'));
   }
 
 
@@ -41,7 +44,7 @@ export class DetailsComponent implements OnInit {
     this.updateForm = this.fb.group({
       id: [defaultDate.id, [Validators.required]],
       name: [defaultDate.name, [Validators.required]],
-      serialNumber: [defaultDate.serialNumber,  [Validators.required]],
+      serialNumber: [defaultDate.serialNumber, [Validators.required]],
       organizationNumber: [defaultDate.organizationNumber],
       purchaseDate: [defaultDate.purchaseDate],
       inUse: [defaultDate.inUse],
@@ -51,24 +54,22 @@ export class DetailsComponent implements OnInit {
 
   submit() {
     const bodyRequest = {};
-    const NullOrDAte = (this.updateForm.value.purchaseDate === null) ? null : moment(this.updateForm.value.purchaseDate).format('DD-MM-YYYY');
-    this.updateDetails = {...this.updateForm.value, purchaseDate: NullOrDAte};
+    const NullOrDAte = this.updateForm.value.purchaseDate ? moment(this.updateForm.value.purchaseDate).format('DD-MM-YYYY') : null;
+    const updateDetails = {...this.updateForm.value, purchaseDate: NullOrDAte};
     Object.keys(this.dataDetails).forEach(key => {
-        if (this.dataDetails[key] !== this.updateDetails[key]) {
-          bodyRequest[key] = this.updateDetails[key];
+        if (this.dataDetails[key] !== updateDetails[key]) {
+          bodyRequest[key] = updateDetails[key];
         }
       }
     );
     this.showSpinner = true;
-    this.service.editDevice(this.updateDetails.id, bodyRequest).subscribe(() => {
-        this.service.showSuccess('Device successfully updated!');
-        this.showSpinner = false;
-      },
-      err => {
-        this.error =_.get(err, 'error.message', '\n' +
-          '        Can\'t update device');
-        this.showSpinner = false;
-      });
+    this.service.editDevice(updateDetails.id, bodyRequest)
+      .pipe(finalize(() => this.showSpinner = false))
+      .subscribe(() => {
+          this.service.showSuccess('Device successfully updated!');
+        },
+        err => this.error = _.get(err, 'error.message', '\n' +
+            '        Can\'t update device'));
   }
 
 }

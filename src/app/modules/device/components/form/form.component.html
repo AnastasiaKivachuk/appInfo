@@ -2,19 +2,19 @@
 <form [formGroup]="myForm" novalidate (ngSubmit)="submit()" class="login-form">
   <div class="columnInput">
   <mat-form-field>
-    <input matInput type="text" name="name" formControlName="name" placeholder="Name*" [errorStateMatcher]="matFormFieldMatcher"/>
+    <input matInput type="text" name="name" formControlName="name" placeholder="Name" required [errorStateMatcher]="matFormFieldMatcher"/>
 
     <div class="alert alert-danger"
          *ngIf="myForm.controls['name'].invalid && myForm.controls['name'].touched">
-      Type name
+      The field musn't be empty
     </div>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="text"  name="serialNumber" formControlName="serialNumber" placeholder="Serial number*" [errorStateMatcher]="matFormFieldMatcher"/>
+    <input matInput type="text"  name="serialNumber" formControlName="serialNumber" placeholder="Serial number" required [errorStateMatcher]="matFormFieldMatcher"/>
 
     <div class="alert alert-danger"
          *ngIf="myForm.controls['serialNumber'].invalid && myForm.controls['serialNumber'].touched">
-      Type serial number
+      The field musn't be empty
     </div>
   </mat-form-field>
   </div>

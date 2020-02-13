@@ -24,6 +24,11 @@
                [pageSizeOptions]="[5, 10, 25, 100]"
                [showFirstLastButtons]="true"
                (page)="pageEvent = handlePage($event)"
->
+               [pageIndex]="ObjDataPaginatorProperties.currentPage"
+               *ngIf="allPerson">
 </mat-paginator>
+<mat-card color="primary" *ngIf="errorCard">
+  {{errorCard}}
+
+</mat-card>
 <app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idPerson)" [errorMessage]="error"></app-dialog-window>

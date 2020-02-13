@@ -40,7 +40,7 @@ export class DataEffects {
   getData$ = this.actions$.pipe(
     ofType(dataActions.FETCH),
     withLatestFrom(this.store.select(getDataPaginatorProperties)),
-    switchMap(([, {currentPage, pageSize}]) => this.rootService.getAllDevice(currentPage, pageSize)
+    switchMap(([__, {currentPage, pageSize}]) => this.rootService.getAllDevice(currentPage, pageSize)
       .pipe(
         map((response: DataResponse) => new dataActions.Success(response)),
         catchError((err) => {

@@ -1,4 +1,5 @@
 <h2>Update device</h2>
+
 <form [formGroup]="updateForm" novalidate (ngSubmit)="submit()" class="login-form" *ngIf="this.dataDetails">
 
   <mat-form-field>
@@ -50,3 +51,11 @@
     </div>
   </div>
 </form>
+<mat-card color="primary" *ngIf="errorCard">
+  {{errorCard}}
+  <br>
+  <button *ngIf="errorCard" mat-raised-button color="primary" class="btn btn-default" [routerLink]="['/device']">
+    Back
+  </button>
+</mat-card>
+<mat-spinner *ngIf="isFetching"></mat-spinner>

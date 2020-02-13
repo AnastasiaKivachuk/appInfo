@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../../device/store';
+import {dataSelectorsPerson} from '../../store/selector';
 
 @Component({
   selector: 'app-main-list-person',
@@ -6,8 +10,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-list-person.component.css']
 })
 export class MainListPersonComponent implements OnInit {
-
-  constructor() { }
+  isFetching$: Observable<boolean>;
+  constructor(private store: Store<AppState>) {
+    this.isFetching$ = store.pipe(select(dataSelectorsPerson.getDataStatus));
+  }
 
   ngOnInit() {
   }

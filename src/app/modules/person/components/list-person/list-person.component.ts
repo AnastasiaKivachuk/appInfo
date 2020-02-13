@@ -16,6 +16,7 @@ import {dataSelectors} from '../../../device/store/selector';
 export class ListPersonComponent implements OnInit {
   public allPerson: any;
   public error: string;
+  public errorCard: string;
   public visibility = false;
   public idPerson: number;
   public ObjDataPaginatorProperties: {
@@ -32,16 +33,9 @@ export class ListPersonComponent implements OnInit {
 
   }
 
-  // getDeleteStatus(state) {
-  //   this.visibility = false;
-  //   this.delete(state, this.idPerson);
-  // }
-
-
   constructor(
     public service: DataPersonService,
-    private store: Store<AppState>,
-    private router: Router
+    private store: Store<AppState>
   ) {
   }
 
@@ -54,7 +48,7 @@ export class ListPersonComponent implements OnInit {
     this.store.select(dataSelectorsPerson.getPageData).subscribe((data) => {
       this.allPerson = data;
     });
-    this.store.select(dataSelectorsPerson.getError).subscribe(data => this.error = data);
+    this.store.select(dataSelectorsPerson.getError).subscribe(data => this.errorCard = data);
     this.store.select(dataSelectorsPerson.getDataPaginatorProperties).subscribe((data) => {
       this.ObjDataPaginatorProperties = data;
     });
@@ -67,17 +61,10 @@ export class ListPersonComponent implements OnInit {
       this.service.deletePerson(id).subscribe(() => {
           this.store.dispatch(new dataActionsPerson.DeletePerson());
           this.service.showSuccess('Device successfully deleted!');
-          this.visibility = false;
         },
-        err => {
-          {
-            this.error = _.get(err, 'error.message', 'some error');
-          }
-        });
-    } else {
-      this.visibility = false;
+        err => this.error = _.get(err, 'error.message', 'some error'));
+      return;
     }
+    this.visibility = false;
   }
-
-
 }

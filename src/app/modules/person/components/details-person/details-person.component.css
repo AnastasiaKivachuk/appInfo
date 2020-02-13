@@ -31,14 +31,23 @@ p{
   display: inline-block;
 }
 
-.mainWrap{
-  /*margin: 0 auto;*/
-  /*position: absolute;               */
-  /*left: 50%;                        */
-  /*transform: translate(-50%, 0%)*/
-}
 
 app-button-with-spinner {
   position: absolute;
   top: 0;
+}
+
+mat-card{
+  width: 50vw;
+  margin: 0 auto;
+}
+
+mat-spinner{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  width: auto;
+  display: block;
 }

@@ -52,20 +52,17 @@ export class TableDeviceComponent implements OnInit {
 
   delete(state, id) {
     this.error = '';
-    if (state === true) {
+    if (state) {
       this.service.deleteDevice(id).subscribe(() => {
           this.store.dispatch(new dataActions.DeleteDevice());
           this.service.showSuccess('Device successfully deleted!');
           this.visibility = false;
         },
-        err => {
-          {
-            this.error = _.get(err, 'error.message', 'some error');
-          }
-        });
-    } else {
-      this.visibility = false;
+        err =>
+          this.error = _.get(err, 'error.message', 'some error'));
+      return;
     }
+    this.visibility = false;
   }
 
 

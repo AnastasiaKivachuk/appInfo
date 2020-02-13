@@ -1,11 +1,13 @@
-<mat-list-item >
-  <div class="cellIndex" (click)="open(this.data.id)">{{this.index}}</div>
-  {{this.data.lastName}} <br>
-  <div class="cell">{{this.data.name}} {{this.data.middleName}}
+<mat-list-item>
+<div class="wrapInfo" (click)="open(this.data.id)">
+  <div class="cellIndex"  >{{this.index}}</div>
+  <div class="cell"> {{this.data.lastName}} <br>
+{{this.data.name}} {{this.data.middleName}}
 
   </div>
-  <div class="cell" (click)="open(this.data.id)">{{this.data.organization.name }}</div>
-  <div class="cell" (click)="open(this.data.id)">{{this.data.contacts[0]?.phones[0].number }}</div>
+  <div class="cell"  >{{this.data.organization.name }}</div>
+  <div class="cell"  >{{this.data.contacts[0]?.phones[0].number }}</div>
+</div>
   <div class="wrapButton">
     <button mat-icon-button color="primary" (click)="hideShowWindow(true, this.data.id)">
       <mat-icon aria-hidden="false" aria-label="delete">delete</mat-icon>

@@ -36,7 +36,7 @@ export class DataPersonService {
   }
 
   deletePerson(id) {
-    return this.http.delete(`${this.mainUrl}/person/?id=${id}`);
+    return this.http.delete(`${this.mainUrl}/1person/?id=${id}`);
   }
 
   getDetailsPerson(id) {

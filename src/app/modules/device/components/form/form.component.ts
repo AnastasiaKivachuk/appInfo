@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import {dataActions} from '../../store/action';
 import {AppState} from '../../store';
 import {DataDeviceService} from '../../services/data-device.service';
+import {finalize} from 'rxjs/operators';
 
 class Matcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -53,17 +54,17 @@ export class FormComponent implements OnInit {
     const purchaseDate = this.myForm.value.purchaseDate ? moment(this.myForm.value.purchaseDate).format('DD-MM-YYYY') : '';
     const formData = {...this.myForm.value, purchaseDate};
     this.showSpinner = true;
-    this.service.createDevice(formData).subscribe(() => {
-        this.showSpinner = false;
-        this.myForm.reset();
-        this.store.dispatch(new dataActions.AddDevice(formData));
-        this.service.showSuccess('New device successfully created!');
+    this.service.createDevice(formData)
+      .pipe(finalize(() => this.showSpinner = false))
+      .subscribe(() => {
+          this.myForm.reset();
+          this.store.dispatch(new dataActions.AddDevice(formData));
+          this.service.showSuccess('New device successfully created!');
 
-      },
-      err => {
-        this.error =_.get(err, 'error.message', 'some error');
-        this.myForm.reset();
-        this.showSpinner = false;
-      });
+        },
+        err => {
+          this.error = _.get(err, 'error.message', 'some error');
+          this.myForm.reset();
+        });
   }
 }

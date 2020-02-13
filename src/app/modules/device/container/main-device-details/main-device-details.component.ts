@@ -1,8 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
-
-import {AppState} from '../../store';
-import {dataSelectors} from '../../store/selector';
 
 @Component({
   selector: 'app-main-device-details',
@@ -10,12 +6,10 @@ import {dataSelectors} from '../../store/selector';
   styleUrls: ['./main-device-details.component.css']
 })
 export class MainDeviceDetailsComponent implements OnInit {
-  isFetching: boolean;
 
-  constructor(private store: Store<AppState>) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.store.select(dataSelectors.getDataStatus).subscribe(state => this.isFetching = state);
   }
 }

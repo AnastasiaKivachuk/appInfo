@@ -4,6 +4,7 @@
 }
 .cell{
   width: 30%;
+
 }
 button{
   float: right;
@@ -11,3 +12,21 @@ button{
 .cellIndex{
   width: 10%;
 }
+.wrapInfo{
+  width: 80%;
+  display: flex;
+}
+
+/*.wrapButton{*/
+/*  width: 20%;*/
+/*  float: right;*/
+/*}*/
+/*!*.cell{*!*/
+/*!*  width: 30%;*!*/
+/*!*}*!*/
+/*button{*/
+/*  float: right;*/
+/*}*/
+/*.cellIndex{*/
+/*  width: 20%;*/
+/*}*/
