@@ -76,24 +76,6 @@ export class FormPersonComponent implements OnInit {
       devices: this.fb.array([]),
       contacts: this.fb.array([]),
 
-      // deviceName: [data.deviceName],
-      //
-      // contacts: [{
-      //   site: [data.contacts.site],
-      //   email: [data.contacts.email]
-      // }],
-      //
-      // county: new FormControl('', [Validators.required]),
-      // city: new FormControl('', [Validators.required]),
-      // street: new FormControl('', [Validators.required]),
-      // streetType: new FormControl(''),
-      // houseNumber: new FormControl('', [Validators.required]),
-      // entranceNumber: new FormControl(''),
-      // apartmentNumber: new FormControl(''),
-      // prefix: new FormControl('', [Validators.required]),
-      // code: new FormControl('', [Validators.required]),
-      // number: new FormControl('', [Validators.required]),
-      // operator: new FormControl(''),
     });
 
     for (const devices of data) {
@@ -150,6 +132,7 @@ export class FormPersonComponent implements OnInit {
     }
 
   }
+
 
   trackByFn(index) {
     return index;

@@ -1,1 +1,30 @@
-<p>list-organization works!</p>
+<mat-list>
+  <mat-list-item>
+    <div class="cellIndex">№</div>
+    <div class="cell">OwnerForm</div>
+    <div class="cell">Name</div>
+  </mat-list-item>
+</mat-list>
+<div *ngIf="allOrganization">
+
+  <mat-list *ngFor="let organization of allOrganization; let i = index">
+
+    <app-line-organization [data]="organization"
+              [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1"
+              (onChanged)="onChanged($event)"></app-line-organization>
+  </mat-list>
+</div>
+<mat-paginator [length]="this.ObjDataPaginatorProperties.totalElements"
+               [pageSize]="this.ObjDataPaginatorProperties.pageSize"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               [showFirstLastButtons]="true"
+               (page)="pageEvent = handlePage($event)"
+               [pageIndex]="ObjDataPaginatorProperties.currentPage"
+               *ngIf="allOrganization"
+>
+</mat-paginator>
+<mat-card color="primary" *ngIf="error">
+  {{error}}
+
+</mat-card>
+<app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idDevice)" [errorMessage]="error" [spiner]="spiner"></app-dialog-window>

@@ -1,1 +1,1 @@
-export * from './line-organization.component'
+export * from './line-organization.component';

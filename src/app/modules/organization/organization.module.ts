@@ -14,6 +14,9 @@ import {
 } from './index';
 import {SharedModule} from '../shared/shared.module';
 import {MyMaterialModule} from '../../material.module';
+import {LineOrganizationComponent} from './components/list-organization/line-organization';
+import {fromData} from '../organization/store/reducers';
+import {DataEffects} from './store/effects';
 
 @NgModule({
   declarations: [
@@ -21,17 +24,18 @@ import {MyMaterialModule} from '../../material.module';
     FormOrganizationComponent,
     ListOrganizationComponent,
     MainOrganizationDetailsComponent,
-    MainListOrganizationComponent
+    MainListOrganizationComponent,
+    LineOrganizationComponent
 
   ],
   imports: [MyMaterialModule,
     SharedModule,
     CommonModule,
     ReactiveFormsModule, RouterModule,
-    // StoreModule.forFeature(
-    //   'storeDataPerson', fromDataPerson.reducer
-    // ),
-    // EffectsModule.forFeature([DataEffectsPerson]), RouterModule
+    StoreModule.forFeature(
+      'storeDataOrganization', fromData.reducer
+    ),
+    EffectsModule.forFeature([DataEffects]), RouterModule
   ],
   providers: [DataOrganizationService],
 })
