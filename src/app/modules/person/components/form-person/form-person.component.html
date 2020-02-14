@@ -1,7 +1,7 @@
 <!--<h2>{{namePage}}</h2>-->
 <app-button-with-spinner class="back" [name]="['Back']" [routerLink]="['/person-list']"></app-button-with-spinner>
 <h2>Create new person</h2>
-<form [formGroup]="formPerson" novalidate (ngSubmit)="submit()" class="login-form">
+<form [formGroup]="formPerson" novalidate (ngSubmit)="submit()" *ngIf="person" class="login-form">
   <h3>General information</h3>
   <div class="information">
 

@@ -3,10 +3,8 @@ import {MatPaginator} from '@angular/material';
 import {Store} from '@ngrx/store';
 import * as _ from 'lodash';
 
-import {DataPersonService} from '../../services/data-person.service';
+import {DataPersonService} from '../../services';
 import {AppState, dataActionsPerson, dataSelectorsPerson} from '../../store';
-import {Router} from '@angular/router';
-import {dataSelectors} from '../../../device/store/selector';
 
 @Component({
   selector: 'app-list-person',
@@ -19,6 +17,7 @@ export class ListPersonComponent implements OnInit {
   public errorCard: string;
   public visibility = false;
   public idPerson: number;
+  public spiner: boolean;
   public ObjDataPaginatorProperties: {
     currentPage: number;
     pageSize: number;
@@ -30,7 +29,6 @@ export class ListPersonComponent implements OnInit {
   onChanged({state, id}) {
     this.visibility = state;
     this.idPerson = id;
-
   }
 
   constructor(
@@ -58,13 +56,19 @@ export class ListPersonComponent implements OnInit {
   delete(state, id) {
     this.error = '';
     if (state === true) {
+      this.spiner = true;
       this.service.deletePerson(id).subscribe(() => {
           this.store.dispatch(new dataActionsPerson.DeletePerson());
           this.service.showSuccess('Device successfully deleted!');
         },
-        err => this.error = _.get(err, 'error.message', 'some error'));
+        err => {
+          this.error = _.get(err, 'error.message', 'some error');
+          this.spiner = false;
+        })
+      ;
       return;
     }
     this.visibility = false;
   }
+
 }

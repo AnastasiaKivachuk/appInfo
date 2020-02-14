@@ -4,13 +4,12 @@ import {Store} from '@ngrx/store';
 import {ErrorStateMatcher} from '@angular/material';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-
-
-import {AppState, dataActionsPerson} from '../../../person/store';
-import {DataPersonService} from '../../services/data-person.service';
-import {ContactModel, DetailsDeviceModel, DetailsPersonModel, OrganizationModel} from '../../models';
 import {ActivatedRoute} from '@angular/router';
 import {finalize} from 'rxjs/operators';
+
+import {AppState, dataActionsPerson} from '../../../person';
+import {DataPersonService} from '../../services';
+
 
 
 class Matcher implements ErrorStateMatcher {
@@ -64,35 +63,92 @@ export class FormPersonComponent implements OnInit {
 
   openDetailsForm(data) {
     console.log(data);
-    // this.formPerson = this.fb.group({
-    //   name: [data.name, [Validators.required]],
-    //   middleName: [data.middleName],
-    //   lastName: [data.lastName, [Validators.required]],
-    //   birthDate: [data.birthDate, [Validators.required]],
-    //   description: [data.description],
-    //   organizationName: [data.organizationName, [Validators.required]],
-    //   privateNumber: [data.privateNumber, [Validators.required]],
-    //   passportSeries: [data.passportSeries, [Validators.required]],
-    //   passportNumber: [data.passportNumber, [Validators.required]],
-    //   deviceName: [data.deviceName],
-    //
-    //   contacts: [{
-    //     site: [data.contacts.site],
-    //     email: [data.contacts.email]
-    //   }],
-    //
-    //   county: new FormControl('', [Validators.required]),
-    //   city: new FormControl('', [Validators.required]),
-    //   street: new FormControl('', [Validators.required]),
-    //   streetType: new FormControl(''),
-    //   houseNumber: new FormControl('', [Validators.required]),
-    //   entranceNumber: new FormControl(''),
-    //   apartmentNumber: new FormControl(''),
-    //   prefix: new FormControl('', [Validators.required]),
-    //   code: new FormControl('', [Validators.required]),
-    //   number: new FormControl('', [Validators.required]),
-    //   operator: new FormControl(''),
-    // });
+    this.formPerson = this.fb.group({
+      name: [data.name, [Validators.required]],
+      middleName: [data.middleName],
+      lastName: [data.lastName, [Validators.required]],
+      birthDate: [data.birthDate, [Validators.required]],
+      description: [data.description],
+      organization: [data.organization.id, [Validators.required]],
+      privateNumber: [data.privateNumber, [Validators.required]],
+      passportSeries: new FormControl(data.passportSeries, [Validators.required, Validators.pattern('[A-Z]{2}')]),
+      passportNumber: new FormControl(data.passportNumber, [Validators.required, Validators.pattern('[0-9]{6}')]),
+      devices: this.fb.array([]),
+      contacts: this.fb.array([]),
+
+      // deviceName: [data.deviceName],
+      //
+      // contacts: [{
+      //   site: [data.contacts.site],
+      //   email: [data.contacts.email]
+      // }],
+      //
+      // county: new FormControl('', [Validators.required]),
+      // city: new FormControl('', [Validators.required]),
+      // street: new FormControl('', [Validators.required]),
+      // streetType: new FormControl(''),
+      // houseNumber: new FormControl('', [Validators.required]),
+      // entranceNumber: new FormControl(''),
+      // apartmentNumber: new FormControl(''),
+      // prefix: new FormControl('', [Validators.required]),
+      // code: new FormControl('', [Validators.required]),
+      // number: new FormControl('', [Validators.required]),
+      // operator: new FormControl(''),
+    });
+
+    for (const devices of data) {
+      devices.push(
+        this.fb.group({
+          name: new FormControl(data.devices.name, [
+            Validators.required
+          ]),
+          serialNumber: new FormControl(data.devices.serialNumber, [
+            Validators.required
+          ]),
+          organizationNumber: new FormControl(data.devices.organizationNumber),
+          purchaseDate: new FormControl(data.devices.purchaseDate),
+          inUse: new FormControl(data.devices.inUse),
+          broken: new FormControl(data.devices.broken),
+        })
+      );
+    }
+
+    for (const contacts of data) {
+      contacts.push(
+        this.fb.group({
+          site: new FormControl(data.contacts.site),
+          email: new FormControl(data.contacts.email, Validators.email),
+          address: this.fb.array([]),
+          phones: this.fb.array([]),
+        })
+      );
+    }
+
+    for (const address of data.contacts) {
+      address.push(
+        this.fb.group({
+          country: new FormControl(data.contacts.address.country, [Validators.required]),
+          city: new FormControl(data.contacts.address.city, [Validators.required]),
+          street: new FormControl(data.contacts.address.street, [Validators.required]),
+          streetType: new FormControl(data.contacts.address.streetType),
+          houseNumber: new FormControl(data.contacts.address.houseNumber, [Validators.required]),
+          entranceNumber: new FormControl(data.contacts.address.entranceNumber),
+          apartmentNumber: new FormControl(data.contacts.address.apartmentNumber),
+        })
+      );
+    }
+
+    for (const phones of data.contacts) {
+      phones.push(
+        this.fb.group({
+          prefix: new FormControl(data.contacts.phones.prefix, [Validators.required, Validators.pattern('[0-9]{3}')]),
+          code: new FormControl(data.contacts.phones.code, [Validators.required, Validators.pattern('[0-9]{2}')]),
+          number: new FormControl(data.contacts.phones.number, [Validators.required, Validators.pattern('[0-9]{7}')]),
+          operator: new FormControl(data.contacts.phones.operator),
+        })
+      );
+    }
+
   }
 
   trackByFn(index) {
@@ -145,6 +201,7 @@ export class FormPersonComponent implements OnInit {
 
   addPhones(i) {
     const phones = this.formPerson.controls.contacts.controls[i].controls.phones as FormArray;
+    // const phones1 = this.formPerson.get('contacts').controls[i].controls.phones as FormArray;
     phones.push(this.fb.group({
       prefix: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
       code: new FormControl('', [Validators.required, Validators.pattern('[0-9]{2}')]),

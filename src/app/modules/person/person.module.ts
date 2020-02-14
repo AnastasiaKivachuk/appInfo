@@ -3,6 +3,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {CommonModule} from '@angular/common';
+import {RouterModule} from '@angular/router';
+
 import {
   DataPersonService,
   FormPersonComponent,
@@ -16,7 +18,7 @@ import {
 } from './index';
 import {SharedModule} from '../shared/shared.module';
 import {MyMaterialModule} from '../../material.module';
-import {RouterModule} from '@angular/router';
+
 
 @NgModule({
   declarations: [

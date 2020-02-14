@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
 
 import {AppState} from '../../store';
 import {dataSelectors} from '../../store/selector';
-import {Observable} from 'rxjs';
+
 
 @Component({
   selector: 'app-main-device',

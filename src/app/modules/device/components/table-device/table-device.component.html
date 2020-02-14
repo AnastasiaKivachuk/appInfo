@@ -26,4 +26,4 @@
   {{error}}
 
 </mat-card>
-<app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idDevice)" [errorMessage]="error"></app-dialog-window>
+<app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idDevice)" [errorMessage]="error" [spiner]="spiner"></app-dialog-window>

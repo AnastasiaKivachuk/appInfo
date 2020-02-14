@@ -10,10 +10,10 @@ export class DialogWindowComponent implements OnInit {
   public nameButton = 'ОК';
   public showSpinner = false;
   @Input() errorMessage: string;
+  @Input() spiner: boolean;
 
   GetDeleteStatus(state: boolean) {
     this.onChanged.emit(state);
-    this.showSpinner = state;
   }
 
   constructor() {

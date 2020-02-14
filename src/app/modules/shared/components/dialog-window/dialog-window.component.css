@@ -6,8 +6,11 @@ mat-card{
   height: auto;
   width: auto;
   display: block;
+
 }
 .wrapButtons{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
 }

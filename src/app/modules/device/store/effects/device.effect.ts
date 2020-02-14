@@ -6,7 +6,7 @@ import {Store} from '@ngrx/store';
 import * as _ from 'lodash';
 
 import * as dataActions from '../action/device.action';
-import {DataDeviceService} from '../../services/data-device.service';
+import {DataDeviceService} from '../../services';
 import {DataResponse} from '../../models';
 import {AppState} from '../app.state';
 import {getDataPaginatorProperties} from '../selector/device.selector';

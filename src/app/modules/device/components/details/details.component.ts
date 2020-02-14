@@ -3,10 +3,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-
-import {DetailsDeviceModel} from '../../models/detailsDevice.model';
-import {DataDeviceService} from '../../services/data-device.service';
 import {finalize} from 'rxjs/operators';
+
+import {DetailsDeviceModel} from '../../models';
+import {DataDeviceService} from '../../services';
+
 
 @Component({
   selector: 'app-details',

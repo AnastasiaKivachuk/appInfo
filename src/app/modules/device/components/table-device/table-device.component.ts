@@ -3,7 +3,7 @@ import {MatPaginator} from '@angular/material';
 import {Store} from '@ngrx/store';
 import * as _ from 'lodash';
 
-import {DataDeviceService} from '../../services/data-device.service';
+import {DataDeviceService} from '../../services';
 import {dataActions} from '../../store/action';
 import {AppState, dataSelectors} from '../../store';
 import {DetailsDeviceModel} from '../../models';
@@ -18,6 +18,7 @@ export class TableDeviceComponent implements OnInit {
   public visibility = false;
   public idDevice: number;
   public error: string;
+  public spiner: boolean;
 
   public ObjDataPaginatorProperties: {
     currentPage: number;
@@ -53,13 +54,17 @@ export class TableDeviceComponent implements OnInit {
   delete(state, id) {
     this.error = '';
     if (state) {
+      this.spiner = true;
       this.service.deleteDevice(id).subscribe(() => {
           this.store.dispatch(new dataActions.DeleteDevice());
           this.service.showSuccess('Device successfully deleted!');
           this.visibility = false;
         },
-        err =>
-          this.error = _.get(err, 'error.message', 'some error'));
+        err => {
+          this.error = _.get(err, 'error.message', 'some error');
+          this.spiner = false;
+        }
+      );
       return;
     }
     this.visibility = false;

@@ -1,8 +1,8 @@
 import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {DetailsDeviceModel} from '../../../models/detailsDevice.model';
-import {DataDeviceService} from '../../../services/data-device.service';
+import {DetailsDeviceModel} from '../../../models';
+import {DataDeviceService} from '../../../services';
 
 @Component({
   selector: 'app-line',

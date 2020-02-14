@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {finalize} from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import {DataPersonService} from '../../services/data-person.service';
+import {DataPersonService} from '../../services';
 
 
 @Component({

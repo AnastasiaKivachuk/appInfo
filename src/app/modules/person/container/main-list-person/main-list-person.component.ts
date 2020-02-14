@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
+
 import {AppState} from '../../../device/store';
 import {dataSelectorsPerson} from '../../store/selector';
 
