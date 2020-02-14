@@ -1,0 +1,116 @@
+<!--<h2>{{namePage}}</h2>-->
+<app-button-with-spinner class="back" [name]="['Back']" [routerLink]="['/organization-list']"></app-button-with-spinner>
+<h2>Create new person</h2>
+<form [formGroup]="formOrganization" novalidate (ngSubmit)="submit()" *ngIf="organization" class="login-form">
+  <h3>General information</h3>
+  <div class="information">
+
+    <mat-form-field>
+      <mat-label for="ownerForm">Last name:</mat-label>
+      <input matInput placeholder="Owner form" required id="ownerForm" type="text" name="ownerForm"
+             formControlName="ownerForm" [errorStateMatcher]="matFormFieldMatcher">
+      <div class="alert alert-danger"
+           *ngIf="formOrganization.controls['ownerForm'].invalid && formOrganization.controls['ownerForm'].touched">
+        The field musn't be empty
+      </div>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-label for="name">Name:</mat-label>
+      <input matInput placeholder="Name" required id="name" type="text" name="name" formControlName="name"
+             [errorStateMatcher]="matFormFieldMatcher">
+      <div class="alert alert-danger"
+           *ngIf="formOrganization.controls['name'].invalid && formOrganization.controls['name'].touched">
+        The field musn't be empty
+      </div>
+    </mat-form-field>
+
+
+  <h3>Address
+    <button mat-icon-button color="primary" type="button" type="button" (click)="addAddress(i)">
+      <mat-icon aria-hidden="false" aria-label="add">add</mat-icon>
+    </button>
+  </h3>
+  <div class="information">
+        <div formArrayName="address"
+             *ngFor="let address of formPerson.controls.contacts.controls[i].controls.address.value; let iA = index; trackBy: trackByFn">
+          <ng-container [formGroupName]="iA">
+            <div> {{iA}}
+              <button *ngIf="iA!==0" mat-icon-button color="primary" type="button" (click)="deleteAddress(iA, i)">
+                <mat-icon aria-hidden="false" aria-label="remove">remove</mat-icon>
+              </button></div>
+            <mat-form-field>
+              <mat-label for="country">County:</mat-label>
+              <input matInput placeholder="Country" required id="country" type="text" name="country"
+                     formControlName="country" [errorStateMatcher]="matFormFieldMatcher">
+              <div class="alert alert-danger"
+                   *ngIf="formPerson.controls.contacts.controls[i].controls.address.controls[i].controls.country.invalid && formPerson.controls.contacts.controls[i].controls.address.controls[i].controls.country.touched">
+                The field musn't be empty
+              </div>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label for="city">City:</mat-label>
+              <input matInput placeholder="City" required id="city" type="text" name="city"
+                     formControlName="city" [errorStateMatcher]="matFormFieldMatcher">
+              <div class="alert alert-danger"
+                   *ngIf="formPerson.controls.contacts.controls[i].controls.address.controls[i].controls.city.invalid && formPerson.controls.contacts.controls[i].controls.address.controls[i].controls.city.touched">
+                The field musn't be empty
+              </div>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label for="street">Street:</mat-label>
+              <input matInput placeholder="Street" required id="street" type="text" name="street"
+                     formControlName="street" [errorStateMatcher]="matFormFieldMatcher">
+              <div class="alert alert-danger"
+                   *ngIf="formPerson.controls.contacts.controls[i].controls.address.controls[i].controls.street.invalid && formPerson.controls.contacts.controls[i].controls.address.controls[i].controls.street.touched">
+                The field musn't be empty
+              </div>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label for="streetType">Street type:</mat-label>
+              <input matInput placeholder="Street type" id="streetType" type="text" name="streetType"
+                     formControlName="streetType">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label for="houseNumber">House number:</mat-label>
+              <input matInput placeholder="House number" required id="houseNumber" type="text" name="houseNumber"
+                     formControlName="houseNumber" [errorStateMatcher]="matFormFieldMatcher">
+              <div class="alert alert-danger"
+                   *ngIf="formPerson.controls.contacts.controls[i].controls.address.controls[i].controls.houseNumber.invalid && formPerson.controls.contacts.controls[i].controls.address.controls[i].controls.houseNumber.touched">
+                The field musn't be empty
+              </div>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label for="entranceNumber">Entrance number:</mat-label>
+              <input matInput placeholder="Entrance number" id="entranceNumber" type="text" name="entranceNumber"
+                     formControlName="entranceNumber">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label for="apartmentNumber">Apartment number:</mat-label>
+              <input matInput placeholder="Apartment number" id="apartmentNumber" type="text" name="apartmentNumber"
+                     formControlName="apartmentNumber">
+            </mat-form-field>
+          </ng-container>
+        </div>
+
+  </div>
+
+
+  <div class="columnButton">
+    <app-button-with-spinner [name]="nameButton" [disabled]="formOrganization.invalid || formOrganization.untouched"
+                             [showSpinner]="showSpinner"></app-button-with-spinner>
+    <div class="alert alert-danger"
+         *ngIf="error">
+      {{error}}
+    </div>
+  </div>
+</form>
+
+

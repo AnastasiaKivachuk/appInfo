@@ -14,6 +14,7 @@ import {AppComponent} from './app.component';
 import {PersonModule} from './modules/person/person.module';
 import {DeviceModule} from './modules/device/device.module';
 import {SharedModule} from './modules/shared/shared.module';
+import {OrganizationModule} from './modules/organization/organization.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {SharedModule} from './modules/shared/shared.module';
     EffectsModule.forRoot([]),
     PersonModule,
     DeviceModule,
-    SharedModule
+    SharedModule,
+    OrganizationModule
   ],
   bootstrap: [AppComponent]
 })

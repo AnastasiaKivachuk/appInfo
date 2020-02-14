@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {MainDeviceComponent} from './modules/device/container/main-device/main-device.component';
-import {MainDeviceDetailsComponent} from './modules/device/container/main-device-details/main-device-details.component';
-import {MainListPersonComponent} from './modules/person/container/main-list-person/main-list-person.component';
-import {FormPersonComponent} from './modules/person/components/form-person/form-person.component';
-import {DetailsPersonComponent} from './modules/person/components/details-person/details-person.component';
+import {MainDeviceComponent} from './modules/device/container/main-device';
+import {MainDeviceDetailsComponent} from './modules/device/container/main-device-details';
+import {MainListPersonComponent} from './modules/person/container/main-list-person';
+import {FormPersonComponent} from './modules/person/components/form-person';
+import {DetailsPersonComponent} from './modules/person/components/details-person';
+import {MainListOrganizationComponent, MainOrganizationDetailsComponent} from './modules/organization/container';
 
 
 
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'person-list/details/:id', component: DetailsPersonComponent },
   { path: 'device', component: MainDeviceComponent },
   { path: 'device/details/:id', component: MainDeviceDetailsComponent },
+  { path: 'organization', component: MainListOrganizationComponent },
+  { path: 'organization/details/:id', component: MainOrganizationDetailsComponent },
   // { path: 'device', component: MainDeviceComponent,
   //   children: [
   //     // { path: '', redirectTo: 'device', pathMatch: 'full' },
