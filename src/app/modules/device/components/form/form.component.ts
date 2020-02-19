@@ -25,7 +25,6 @@ class Matcher implements ErrorStateMatcher {
 export class FormComponent implements OnInit {
   myForm: FormGroup;
   matFormFieldMatcher = new Matcher();
-  public nameButton = `Create device`;
   public error: string;
   public showSpinner = false;
 

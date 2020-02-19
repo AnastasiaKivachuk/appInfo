@@ -1,1 +1,9 @@
-<app-details-organization></app-details-organization>
+<button mat-raised-button color="primary" class="btn btn-default" [routerLink]="['/organization']">
+  Back
+</button>
+<app-form-organization [data]="organization" *ngIf="organization"></app-form-organization>
+<mat-spinner *ngIf="isFetching"></mat-spinner>
+<mat-card color="primary" *ngIf="errorCard">
+  {{errorCard}}
+
+</mat-card>

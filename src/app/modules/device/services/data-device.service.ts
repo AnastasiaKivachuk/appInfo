@@ -31,7 +31,7 @@ export class DataDeviceService {
   }
 
   deleteDevice(id) {
-    return this.http.delete(`${this.mainUrl}/device/?id=${id}`);
+    return this.http.delete(`${this.mainUrl}/1device/?id=${id}`);
   }
 
   getDetailsDevice(id) {

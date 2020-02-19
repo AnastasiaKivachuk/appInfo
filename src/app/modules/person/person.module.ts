@@ -18,6 +18,7 @@ import {
 } from './index';
 import {SharedModule} from '../shared/shared.module';
 import {MyMaterialModule} from '../../material.module';
+import { MainFormPersonComponent } from './container/main-form-person/main-form-person.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MyMaterialModule} from '../../material.module';
     LinePersonComponent,
     DetailsPersonComponent,
     FormPersonComponent,
+    MainFormPersonComponent,
 
   ],
   imports: [MyMaterialModule,

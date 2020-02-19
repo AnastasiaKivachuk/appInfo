@@ -7,20 +7,17 @@ import {RouterModule} from '@angular/router';
 
 import {
   DataOrganizationService,
-  DetailsOrganizationComponent,
   FormOrganizationComponent,
   ListOrganizationComponent, MainListOrganizationComponent,
-  MainOrganizationDetailsComponent
+  MainOrganizationDetailsComponent, LineOrganizationComponent
 } from './index';
 import {SharedModule} from '../shared/shared.module';
 import {MyMaterialModule} from '../../material.module';
-import {LineOrganizationComponent} from './components/list-organization/line-organization';
 import {fromData} from '../organization/store/reducers';
 import {DataEffects} from './store/effects';
 
 @NgModule({
   declarations: [
-    DetailsOrganizationComponent,
     FormOrganizationComponent,
     ListOrganizationComponent,
     MainOrganizationDetailsComponent,

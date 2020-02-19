@@ -5,25 +5,25 @@
     <div class="cell">Serial number</div>
   </mat-list-item>
 </mat-list>
-<div *ngIf="allDevice">
+<div *ngIf="allDevice$ | async as allDevice">
+  <ng-container *ngIf="ObjDataPaginatorProperties$ | async as ObjDataPaginatorProperties">
   <mat-list *ngFor="let device of allDevice; let i = index">
 
     <app-line [data]="device"
               [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1"
               (onChanged)="onChanged($event)"></app-line>
   </mat-list>
+  </ng-container>
 </div>
+<ng-container *ngIf="ObjDataPaginatorProperties$ | async as ObjDataPaginatorProperties">
 <mat-paginator [length]="this.ObjDataPaginatorProperties.totalElements"
                [pageSize]="this.ObjDataPaginatorProperties.pageSize"
                [pageSizeOptions]="[5, 10, 25, 100]"
                [showFirstLastButtons]="true"
                (page)="pageEvent = handlePage($event)"
                [pageIndex]="ObjDataPaginatorProperties.currentPage"
-               *ngIf="allDevice"
+               *ngIf="allDevice$ |async"
 >
 </mat-paginator>
-<mat-card color="primary" *ngIf="error">
-  {{error}}
-
-</mat-card>
+</ng-container>
 <app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idDevice)" [errorMessage]="error" [spiner]="spiner"></app-dialog-window>

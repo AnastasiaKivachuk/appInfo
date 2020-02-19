@@ -11,7 +11,6 @@ import {AppState, dataActionsPerson} from '../../../person';
 import {DataPersonService} from '../../services';
 
 
-
 class Matcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     return control.invalid && control.dirty;
@@ -27,7 +26,6 @@ class Matcher implements ErrorStateMatcher {
 export class FormPersonComponent implements OnInit {
   formPerson: FormGroup;
   matFormFieldMatcher = new Matcher();
-  public nameButton = `Create device`;
   public error: string;
   public showSpinner = false;
   public allOrganization: {};
@@ -36,7 +34,8 @@ export class FormPersonComponent implements OnInit {
 
   constructor(public service: DataPersonService,
               private store: Store<AppState>,
-              private fb: FormBuilder, private route: ActivatedRoute) {
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
 
   }
 
@@ -45,8 +44,6 @@ export class FormPersonComponent implements OnInit {
       this.service.getDetailsPerson(this.route.snapshot.paramMap.get('id')).subscribe(data => {
         this.person = data;
         this.openDetailsForm(data);
-        console.log(this.person);
-        console.log(444);
       });
     } else {
       this.initForm();
@@ -62,7 +59,11 @@ export class FormPersonComponent implements OnInit {
   }
 
   openDetailsForm(data) {
-    console.log(data);
+    const contactsForm = this.fb.array([]);
+    const devicesForm = this.fb.array([]);
+    const addressForm = this.fb.array([]);
+    const phonesForm = this.fb.array([]);
+
     this.formPerson = this.fb.group({
       name: [data.name, [Validators.required]],
       middleName: [data.middleName],
@@ -73,13 +74,13 @@ export class FormPersonComponent implements OnInit {
       privateNumber: [data.privateNumber, [Validators.required]],
       passportSeries: new FormControl(data.passportSeries, [Validators.required, Validators.pattern('[A-Z]{2}')]),
       passportNumber: new FormControl(data.passportNumber, [Validators.required, Validators.pattern('[0-9]{6}')]),
-      devices: this.fb.array([]),
-      contacts: this.fb.array([]),
+      devices: devicesForm,
+      contacts: contactsForm,
 
     });
 
     for (const devices of data) {
-      devices.push(
+      devicesForm.push(
         this.fb.group({
           name: new FormControl(data.devices.name, [
             Validators.required
@@ -96,18 +97,18 @@ export class FormPersonComponent implements OnInit {
     }
 
     for (const contacts of data) {
-      contacts.push(
+      contactsForm.push(
         this.fb.group({
           site: new FormControl(data.contacts.site),
           email: new FormControl(data.contacts.email, Validators.email),
-          address: this.fb.array([]),
-          phones: this.fb.array([]),
+          address: addressForm,
+          phones: phonesForm,
         })
       );
     }
 
     for (const address of data.contacts) {
-      address.push(
+      addressForm.push(
         this.fb.group({
           country: new FormControl(data.contacts.address.country, [Validators.required]),
           city: new FormControl(data.contacts.address.city, [Validators.required]),
@@ -121,7 +122,7 @@ export class FormPersonComponent implements OnInit {
     }
 
     for (const phones of data.contacts) {
-      phones.push(
+      phonesForm.push(
         this.fb.group({
           prefix: new FormControl(data.contacts.phones.prefix, [Validators.required, Validators.pattern('[0-9]{3}')]),
           code: new FormControl(data.contacts.phones.code, [Validators.required, Validators.pattern('[0-9]{2}')]),
@@ -183,8 +184,8 @@ export class FormPersonComponent implements OnInit {
   }
 
   addPhones(i) {
-    const phones = this.formPerson.controls.contacts.controls[i].controls.phones as FormArray;
-    // const phones1 = this.formPerson.get('contacts').controls[i].controls.phones as FormArray;
+    const contacts = this.formPerson.get('contacts') as FormArray;
+    const phones = contacts.controls[i].get('phones') as FormArray;
     phones.push(this.fb.group({
       prefix: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
       code: new FormControl('', [Validators.required, Validators.pattern('[0-9]{2}')]),
@@ -194,12 +195,14 @@ export class FormPersonComponent implements OnInit {
   }
 
   deletePhones(iP, i) {
-    const phones = this.formPerson.controls.contacts.controls[i].controls.phones as FormArray;
+    const contacts = this.formPerson.get('contacts') as FormArray;
+    const phones = contacts.controls[i].get('phones') as FormArray;
     phones.removeAt(phones.value.findIndex(select => select.id === iP));
   }
 
   addAddress(i) {
-    const address = this.formPerson.controls.contacts.controls[i].controls.address as FormArray;
+    const contacts = this.formPerson.get('contacts') as FormArray;
+    const address = contacts.controls[i].get('address') as FormArray;
     address.push(this.fb.group({
       country: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
@@ -212,7 +215,8 @@ export class FormPersonComponent implements OnInit {
   }
 
   deleteAddress(iA, i) {
-    const address = this.formPerson.controls.contacts.controls[i].controls.address as FormArray;
+    const contacts = this.formPerson.get('contacts') as FormArray;
+    const address = contacts.controls[i].get('address') as FormArray;
     address.removeAt(address.value.findIndex(select => select.id === iA));
   }
 
@@ -236,11 +240,8 @@ export class FormPersonComponent implements OnInit {
           this.store.dispatch(new dataActionsPerson.AddPerson(formData));
           this.service.showSuccess('New person successfully created!');
         },
-        err => {
-          this.error = _.get(err, 'error.message', 'some error');
-          this.formPerson.reset();
-          console.log(err);
-        });
+        err =>
+          this.error = _.get(err, 'error.message', 'some error'));
   }
 
 

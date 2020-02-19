@@ -1,10 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as _ from 'lodash';
+import {Observable} from 'rxjs';
+
 
 import {DataPersonService} from '../../services';
 import {AppState, dataActionsPerson, dataSelectorsPerson} from '../../store';
+import {DetailsPersonModel, PaginatorModel} from '../../models';
 
 @Component({
   selector: 'app-list-person',
@@ -12,17 +15,12 @@ import {AppState, dataActionsPerson, dataSelectorsPerson} from '../../store';
   styleUrls: ['./list-person.component.css']
 })
 export class ListPersonComponent implements OnInit {
-  public allPerson: any;
+  public allPerson$: Observable<[DetailsPersonModel]>;
   public error: string;
-  public errorCard: string;
   public visibility = false;
   public idPerson: number;
   public spiner: boolean;
-  public ObjDataPaginatorProperties: {
-    currentPage: number;
-    pageSize: number;
-    totalElements: number;
-  };
+  public ObjDataPaginatorProperties$: Observable<PaginatorModel>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   pageEvent: void;
 
@@ -35,6 +33,8 @@ export class ListPersonComponent implements OnInit {
     public service: DataPersonService,
     private store: Store<AppState>
   ) {
+    this.allPerson$ = store.pipe(select(dataSelectorsPerson.getPageData));
+    this.ObjDataPaginatorProperties$ = store.pipe(select(dataSelectorsPerson.getDataPaginatorProperties));
   }
 
   public handlePage(e: any) {
@@ -43,14 +43,6 @@ export class ListPersonComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new dataActionsPerson.Fetch());
-    this.store.select(dataSelectorsPerson.getPageData).subscribe((data) => {
-      this.allPerson = data;
-    });
-    this.store.select(dataSelectorsPerson.getError).subscribe(data => this.errorCard = data);
-    this.store.select(dataSelectorsPerson.getDataPaginatorProperties).subscribe((data) => {
-      this.ObjDataPaginatorProperties = data;
-    });
-
   }
 
   delete(state, id) {
@@ -64,11 +56,9 @@ export class ListPersonComponent implements OnInit {
         err => {
           this.error = _.get(err, 'error.message', 'some error');
           this.spiner = false;
-        })
-      ;
+        });
       return;
     }
     this.visibility = false;
   }
-
 }

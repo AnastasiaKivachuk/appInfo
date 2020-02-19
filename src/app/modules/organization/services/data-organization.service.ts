@@ -37,7 +37,7 @@ export class DataOrganizationService {
     return this.http.get(`${this.mainUrl}/organization/${id}`);
   }
 
-  editOrganization(id, body) {
+  editOrganization(body, id) {
     return this.http.patch(`${this.mainUrl}/organization?id=${id}`, body);
   }
   showSuccess(message) {

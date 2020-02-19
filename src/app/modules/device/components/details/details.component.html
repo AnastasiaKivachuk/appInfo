@@ -3,19 +3,19 @@
 <form [formGroup]="updateForm" novalidate (ngSubmit)="submit()" class="login-form" *ngIf="this.dataDetails">
 
   <mat-form-field>
-    <input matInput type="text" name="name" formControlName="name" placeholder="Name*"/>
+    <input matInput type="text" name="name" formControlName="name" required placeholder="Name"/>
 
     <div class="alert alert-danger"
          *ngIf="updateForm.controls['name'].invalid && updateForm.controls['name'].touched">
-      Type name
+      The field mustn't be empty
     </div>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="text" name="serialNumber" formControlName="serialNumber" placeholder="Serial number*"/>
+    <input matInput type="text" name="serialNumber" formControlName="serialNumber" required placeholder="Serial number"/>
 
     <div class="alert alert-danger"
          *ngIf="updateForm.controls['serialNumber'].invalid && updateForm.controls['serialNumber'].touched">
-      Type serial number
+      The field mustn't be empty
     </div>
   </mat-form-field>
 
@@ -36,9 +36,8 @@
   <mat-checkbox name="broken" color="primary" formControlName="broken">Broken</mat-checkbox>
 
   <div>
-    <div>
+    <div class="wrapButton">
       <app-button-with-spinner [name]="['Update']" [showSpinner] = "this.showSpinner" [disabled]="updateForm.invalid">
-
       </app-button-with-spinner>
 
       <button mat-raised-button color="primary" class="btn btn-default" [routerLink]="['/device']">

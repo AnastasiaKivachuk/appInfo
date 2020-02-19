@@ -1,3 +1,6 @@
 <app-form></app-form>
 <app-table-device></app-table-device>
 <mat-spinner *ngIf="isFetching$ | async"></mat-spinner>
+<mat-card color="primary" *ngIf="errorCard$ | async as errorCard">
+  {{errorCard}}
+</mat-card>

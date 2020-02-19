@@ -6,7 +6,7 @@
 
     <div class="alert alert-danger"
          *ngIf="myForm.controls['name'].invalid && myForm.controls['name'].touched">
-      The field musn't be empty
+      The field mustn't be empty
     </div>
   </mat-form-field>
   <mat-form-field>
@@ -14,7 +14,7 @@
 
     <div class="alert alert-danger"
          *ngIf="myForm.controls['serialNumber'].invalid && myForm.controls['serialNumber'].touched">
-      The field musn't be empty
+      The field mustn't be empty
     </div>
   </mat-form-field>
   </div>
@@ -36,7 +36,7 @@
   <mat-checkbox name="broken" color="primary" formControlName="broken">Broken</mat-checkbox>
   </div>
   <div class="columnButton">
-<app-button-with-spinner [name]="this.nameButton" [disabled]="myForm.invalid || myForm.untouched" [showSpinner]="this.showSpinner"> </app-button-with-spinner>
+<app-button-with-spinner [name]="['Create device']" [disabled]="myForm.invalid || myForm.untouched" [showSpinner]="this.showSpinner"> </app-button-with-spinner>
       <div class="alert alert-danger"
            *ngIf="error">
         {{error}}

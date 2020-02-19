@@ -1,6 +1,4 @@
-<!--<h2>{{namePage}}</h2>-->
-
-<h2>Create new person</h2>
+<h2>{{namePage}}</h2>
 <form [formGroup]="formOrganization" novalidate (ngSubmit)="submit()" class="login-form">
   <h3>General information</h3>
   <div class="information">
@@ -10,10 +8,9 @@
              formControlName="ownerForm" [errorStateMatcher]="matFormFieldMatcher">
       <div class="alert alert-danger"
            *ngIf="formOrganization.controls['ownerForm'].invalid && formOrganization.controls['ownerForm'].touched">
-        The field musn't be empty
+        The field mustn't be empty
       </div>
     </mat-form-field>
-
 
     <mat-form-field>
       <mat-label for="name">Name:</mat-label>
@@ -21,10 +18,9 @@
              [errorStateMatcher]="matFormFieldMatcher">
       <div class="alert alert-danger"
            *ngIf="formOrganization.controls['name'].invalid && formOrganization.controls['name'].touched">
-        The field musn't be empty
+        The field mustn't be empty
       </div>
     </mat-form-field>
-
 
   <h3>Address
     <button mat-icon-button color="primary" type="button" type="button" (click)="addAddress()">
@@ -45,7 +41,7 @@
                      formControlName="country" [errorStateMatcher]="matFormFieldMatcher">
               <div class="alert alert-danger"
                 *ngIf="this.formOrganization.controls.address.controls[iA].controls.country.invalid && this.formOrganization.controls.address.controls[iA].controls.touched">
-                The field musn't be empty
+                The field mustn't be empty
               </div>
             </mat-form-field>
 
@@ -55,7 +51,7 @@
                      formControlName="city" [errorStateMatcher]="matFormFieldMatcher">
               <div class="alert alert-danger"
                    *ngIf="this.formOrganization.controls.address.controls[iA].controls.city.invalid && this.formOrganization.controls.address.controls[iA].controls.city.touched">
-                The field musn't be empty
+                The field mustn't be empty
               </div>
             </mat-form-field>
 
@@ -65,7 +61,7 @@
                      formControlName="street" [errorStateMatcher]="matFormFieldMatcher">
               <div class="alert alert-danger"
                    *ngIf="this.formOrganization.controls.address.controls[iA].controls.street.invalid && this.formOrganization.controls.address.controls[iA].controls.street.touched">
-                The field musn't be empty
+                The field mustn't be empty
               </div>
             </mat-form-field>
 
@@ -81,7 +77,7 @@
                      formControlName="houseNumber" [errorStateMatcher]="matFormFieldMatcher">
               <div class="alert alert-danger"
                    *ngIf="this.formOrganization.controls.address.controls[iA].controls.houseNumber.invalid && this.formOrganization.controls.address.controls[iA].controls.houseNumber.touched">
-                The field musn't be empty
+                The field mustn't be empty
               </div>
             </mat-form-field>
 
@@ -98,9 +94,7 @@
             </mat-form-field>
           </ng-container>
         </div>
-
   </div>
-
 
   <div class="columnButton">
     <app-button-with-spinner [name]="nameButton" [disabled]="formOrganization.invalid || formOrganization.untouched"

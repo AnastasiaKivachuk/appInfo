@@ -19,8 +19,7 @@ import {OrganizationModule} from './modules/organization/organization.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-
+    AppComponent
   ],
   imports: [
     ToastrModule.forRoot({

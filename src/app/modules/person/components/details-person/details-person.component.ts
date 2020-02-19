@@ -5,7 +5,6 @@ import * as _ from 'lodash';
 
 import {DataPersonService} from '../../services';
 
-
 @Component({
   selector: 'app-details-person',
   templateUrl: './details-person.component.html',
@@ -26,11 +25,11 @@ export class DetailsPersonComponent implements OnInit {
       .pipe(finalize(() => this.isFetching = false))
       .subscribe(data => {
           this.person = data;
+          console.log(data);
         },
-        err => {console.log(err);
+        err =>
           this.error = _.get(err, 'error.message', '\n' +
-            '        Some error');
-        });
+            '        Some error'));
 
   }
 

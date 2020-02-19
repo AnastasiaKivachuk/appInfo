@@ -1,2 +1,5 @@
 <app-list-person></app-list-person>
 <mat-spinner *ngIf="isFetching$ | async"></mat-spinner>
+<mat-card color="primary" *ngIf="errorCard$">
+  {{errorCard$}}
+</mat-card>

@@ -11,24 +11,23 @@
     <div class="wrapButton"></div>
   </mat-list-item>
 </mat-list>
-<div *ngIf="allPerson">
+<div *ngIf="allPerson$ | async as allPerson">
   <mat-list *ngFor="let person of allPerson; let i = index">
-
+<ng-container *ngIf="ObjDataPaginatorProperties$ | async as ObjDataPaginatorProperties">
     <app-line-person [data]="person"
               [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1"
               (onChanged)="onChanged($event)"></app-line-person>
+</ng-container>
   </mat-list>
 </div>
+<ng-container *ngIf="ObjDataPaginatorProperties$ | async as ObjDataPaginatorProperties">
 <mat-paginator [length]="this.ObjDataPaginatorProperties.totalElements"
                [pageSize]="this.ObjDataPaginatorProperties.pageSize"
                [pageSizeOptions]="[5, 10, 25, 100]"
                [showFirstLastButtons]="true"
                (page)="pageEvent = handlePage($event)"
                [pageIndex]="ObjDataPaginatorProperties.currentPage"
-               *ngIf="allPerson">
+               *ngIf="allPerson$ | async ">
 </mat-paginator>
-<mat-card color="primary" *ngIf="errorCard">
-  {{errorCard}}
-
-</mat-card>
+</ng-container>
 <app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idPerson)" [errorMessage]="error" [spiner]="spiner"></app-dialog-window>

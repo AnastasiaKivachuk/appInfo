@@ -5,26 +5,26 @@
     <div class="cell">Name</div>
   </mat-list-item>
 </mat-list>
-<div *ngIf="allOrganization">
+<div *ngIf="allOrganization$ | async as allOrganization">
 
   <mat-list *ngFor="let organization of allOrganization; let i = index">
-
-    <app-line-organization [data]="organization"
-              [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1"
-              (onChanged)="onChanged($event)"></app-line-organization>
+    <ng-container *ngIf="ObjDataPaginatorProperties$ | async as ObjDataPaginatorProperties">
+      <app-line-organization [data]="organization"
+                             [index]="i+(this.ObjDataPaginatorProperties.currentPage*this.ObjDataPaginatorProperties.pageSize)+1"
+                             (onChanged)="onChanged($event)"></app-line-organization>
+    </ng-container>
   </mat-list>
 </div>
-<mat-paginator [length]="this.ObjDataPaginatorProperties.totalElements"
-               [pageSize]="this.ObjDataPaginatorProperties.pageSize"
-               [pageSizeOptions]="[5, 10, 25, 100]"
-               [showFirstLastButtons]="true"
-               (page)="pageEvent = handlePage($event)"
-               [pageIndex]="ObjDataPaginatorProperties.currentPage"
-               *ngIf="allOrganization"
->
-</mat-paginator>
-<mat-card color="primary" *ngIf="error">
-  {{error}}
-
-</mat-card>
-<app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idDevice)" [errorMessage]="error" [spiner]="spiner"></app-dialog-window>
+<ng-container *ngIf="ObjDataPaginatorProperties$ | async as ObjDataPaginatorProperties">
+  <mat-paginator [length]="this.ObjDataPaginatorProperties.totalElements"
+                 [pageSize]="this.ObjDataPaginatorProperties.pageSize"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 [showFirstLastButtons]="true"
+                 (page)="pageEvent = handlePage($event)"
+                 [pageIndex]="ObjDataPaginatorProperties.currentPage"
+                 *ngIf="allOrganization$ | async"
+  >
+  </mat-paginator>
+</ng-container>
+<app-dialog-window *ngIf="visibility " (onChanged)="delete($event, idDevice)" [errorMessage]="error"
+                   [spiner]="spiner"></app-dialog-window>

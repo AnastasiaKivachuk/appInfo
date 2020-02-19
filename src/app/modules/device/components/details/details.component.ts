@@ -72,5 +72,4 @@ export class DetailsComponent implements OnInit {
         err => this.error = _.get(err, 'error.message', '\n' +
             '        Can\'t update device'));
   }
-
 }

@@ -12,7 +12,9 @@ import {dataSelectorsPerson} from '../../store/selector';
 })
 export class MainListPersonComponent implements OnInit {
   isFetching$: Observable<boolean>;
+  errorCard$: Observable<string>;
   constructor(private store: Store<AppState>) {
+    this.errorCard$ = store.pipe(select(dataSelectorsPerson.getError));
     this.isFetching$ = store.pipe(select(dataSelectorsPerson.getDataStatus));
   }
 

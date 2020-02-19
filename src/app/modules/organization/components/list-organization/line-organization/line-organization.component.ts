@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 
 import {DataOrganizationService} from '../../../services';
 import {OrganizationModel} from '../../../models';
+
 @Component({
   selector: 'app-line-organization',
   templateUrl: './line-organization.component.html',
@@ -11,13 +12,11 @@ import {OrganizationModel} from '../../../models';
 export class LineOrganizationComponent implements OnInit {
   @Input() data: OrganizationModel;
   @Input() index: number;
-
   @Output() onChanged = new EventEmitter<{ state: boolean, id: number }>();
 
   hideShowWindow(state: boolean, id: number) {
     this.onChanged.emit({state, id});
   }
-
 
   constructor(public service: DataOrganizationService,
               public router: Router) {

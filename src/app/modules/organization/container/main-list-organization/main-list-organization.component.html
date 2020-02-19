@@ -1,2 +1,6 @@
 <app-form-organization></app-form-organization>
 <app-list-organization></app-list-organization>
+<mat-spinner *ngIf="isFetching$ | async"></mat-spinner>
+<mat-card color="primary" *ngIf="errorCard$ | async as errorCard">
+  {{errorCard}}
+</mat-card>
