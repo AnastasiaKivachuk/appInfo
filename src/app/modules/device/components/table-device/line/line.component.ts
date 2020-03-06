@@ -13,16 +13,14 @@ export class LineComponent implements OnInit {
   @Input() data: DetailsDeviceModel;
   @Input() index: number;
 
-  @Output() onChanged = new EventEmitter<{ state: boolean, id: number }>();
+  @Output() changed = new EventEmitter<{ state: boolean, id: number }>();
 
   hideShowWindow(state: boolean, id: number) {
-    this.onChanged.emit({state, id});
+    this.changed.emit({state, id});
   }
-
 
   constructor(public service: DataDeviceService,
-              public router: Router) {
-  }
+              public router: Router) { }
 
   ngOnInit() {
   }
@@ -30,6 +28,5 @@ export class LineComponent implements OnInit {
   edit(id) {
     this.router.navigate([`device/details/${id}`]);
   }
-
 
 }

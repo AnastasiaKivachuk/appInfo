@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import {finalize} from 'rxjs/operators';
 
 import {DataOrganizationService} from '../../services';
+import {OrganizationModel} from '../../models';
 
 
 @Component({
@@ -12,7 +13,7 @@ import {DataOrganizationService} from '../../services';
   styleUrls: ['./main-organization-details.component.css']
 })
 export class MainOrganizationDetailsComponent implements OnInit {
-  public organization: {};
+  public organization: OrganizationModel;
   public isFetching = true;
   public errorCard: string;
 
@@ -23,7 +24,7 @@ export class MainOrganizationDetailsComponent implements OnInit {
   ngOnInit() {
     this.service.getDetailsOrganization(this.route.snapshot.paramMap.get('id'))
       .pipe(finalize(() => this.isFetching = false))
-      .subscribe(data =>
+      .subscribe((data: OrganizationModel) =>
           this.organization = data,
         err => this.errorCard = _.get(err, 'error.message', '\n' +
           '        Some error'));

@@ -58,10 +58,10 @@ export function reducer(state: State = initialState, action: StoreDataAction.Act
     case StoreDataAction.ADD:
       return {
         ...state,
-        content: state.paginator.currentPage === state.paginator.totalPages - 1 && state.content.length < state.paginator.pageSize ? [...state.content, action.payload] : state.content,
+        content:  isLastPage(state) ? [...state.content, action.payload] : state.content,
         paginator: {
           ...state.paginator,
-          totalPages: state.paginator.totalPages * state.paginator.pageSize === state.paginator.totalElements ? state.paginator.totalPages + 1 : state.paginator.totalPages,
+          totalPages:  totalPage(state) ? state.paginator.totalPages + 1 : state.paginator.totalPages,
           totalElements: state.paginator.totalElements + 1,
         }
       };
@@ -75,3 +75,11 @@ export const getError = (state: State) => state.error;
 export const getData = (state: State) => state.content;
 export const getStatus = (state: State) => state.isFetching;
 export const getPaginatorProperties = (state: State) => state.paginator;
+
+function isLastPage(state) {
+  return state.paginator.currentPage === state.paginator.totalPages - 1 && state.content.length < state.paginator.pageSize;
+}
+
+function totalPage(state) {
+  return state.paginator.totalPages * state.paginator.pageSize === state.paginator.totalElements;
+}

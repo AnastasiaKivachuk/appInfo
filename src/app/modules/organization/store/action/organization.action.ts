@@ -45,7 +45,7 @@ export class DeleteOrganization implements Action {
 export class AddOrganization implements Action {
   readonly type = ADD;
   constructor(public payload: {
-    content: [OrganizationModel];
+    content: OrganizationModel[];
   }) {
   }
 }

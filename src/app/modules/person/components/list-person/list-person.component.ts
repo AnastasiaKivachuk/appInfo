@@ -15,7 +15,7 @@ import {DetailsPersonModel, PaginatorModel} from '../../models';
   styleUrls: ['./list-person.component.css']
 })
 export class ListPersonComponent implements OnInit {
-  public allPerson$: Observable<[DetailsPersonModel]>;
+  public allPerson$: Observable<DetailsPersonModel[]>;
   public error: string;
   public visibility = false;
   public idPerson: number;

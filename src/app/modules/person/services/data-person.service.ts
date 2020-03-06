@@ -43,7 +43,6 @@ export class DataPersonService {
     return this.http.get(`${this.mainUrl}/person/${id}`);
   }
 
-
   showSuccess(message) {
     this.toastr.success(message);
   }

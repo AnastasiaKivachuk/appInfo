@@ -5,7 +5,7 @@ import {DataResponse, DetailsDeviceModel} from '../../models';
 export const FETCH = '[device] Fetch';
 export const ERROR = '[device] Error';
 export const SUCCESS = '[device] Success';
-export const CHANGE = '[device] ChangePropertyOfPaginator';
+export const CHANGE = '[device] Change property of paginator';
 export const DELETE = '[device] DeleteDevice';
 export const ADD = '[device] AddDevice';
 
@@ -45,7 +45,7 @@ export class DeleteDevice implements Action {
 export class AddDevice implements Action {
   readonly type = ADD;
   constructor(public payload: {
-    content: [DetailsDeviceModel];
+    content: DetailsDeviceModel[];
   }) {
   }
 }

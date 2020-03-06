@@ -3,12 +3,11 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
+import {RouterModule} from '@angular/router';
 
 import {DataDeviceService} from './services/data-device.service';
 import {fromData} from './store/reducers';
 import {DataEffects} from './store/effects/device.effect';
-
-
 import {
   MainDeviceDetailsComponent,
   LineComponent,
@@ -19,7 +18,7 @@ import {
 } from './index';
 import {SharedModule} from '../shared/shared.module';
 import {MyMaterialModule} from '../../material.module';
-import {RouterModule} from '@angular/router';
+
 
 @NgModule({
   declarations: [

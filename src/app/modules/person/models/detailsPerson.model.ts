@@ -3,17 +3,17 @@ import {ContactModel} from './contact.model';
 import {DetailsDeviceModel} from '../../device/models';
 
 export interface DetailsPersonModel {
-  id: number;
+  id?: number;
   name: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
   birthDate?: string | undefined;
-  organization: OrganizationModel;
+  organization: OrganizationModel[];
   privateNumber: string;
   passportSeries: string;
   passportNumber: number;
-  description: string;
-  contacts: [ContactModel];
-  devices: [DetailsDeviceModel];
+  description?: string;
+  contacts?: ContactModel[];
+  devices?: DetailsDeviceModel[];
 }
 

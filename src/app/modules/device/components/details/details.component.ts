@@ -55,7 +55,8 @@ export class DetailsComponent implements OnInit {
 
   submit() {
     const bodyRequest = {};
-    const NullOrDAte = this.updateForm.value.purchaseDate ? moment(this.updateForm.value.purchaseDate).format('DD-MM-YYYY') : null;
+    const purchaseDate = this.updateForm.value.purchaseDate;
+    const NullOrDAte = purchaseDate ? moment(purchaseDate).format('DD-MM-YYYY') : null;
     const updateDetails = {...this.updateForm.value, purchaseDate: NullOrDAte};
     Object.keys(this.dataDetails).forEach(key => {
         if (this.dataDetails[key] !== updateDetails[key]) {

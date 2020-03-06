@@ -15,7 +15,7 @@ import {OrganizationModel, PaginatorModel} from '../../models';
   styleUrls: ['./list-organization.component.css']
 })
 export class ListOrganizationComponent implements OnInit {
-  public allOrganization$: Observable<[OrganizationModel]>;
+  public allOrganization$: Observable<OrganizationModel[]>;
   public visibility = false;
   public idDevice: number;
   public error: string;
@@ -48,20 +48,19 @@ export class ListOrganizationComponent implements OnInit {
 
   delete(state, id) {
     this.error = '';
-    if (state) {
-      this.spiner = true;
-      this.service.deleteOrganization(id).subscribe(() => {
-          this.store.dispatch(new dataActions.DeleteOrganization());
-          this.service.showSuccess('Organization successfully deleted!');
-          this.visibility = false;
-        },
-        err => {
-          this.error = _.get(err, 'error.message', 'some error');
-          this.spiner = false;
-        }
-      );
-      return;
+    if (!state) {
+      return this.visibility = false;
     }
-    this.visibility = false;
+    this.spiner = true;
+    this.service.deleteOrganization(id).subscribe(() => {
+        this.store.dispatch(new dataActions.DeleteOrganization());
+        this.service.showSuccess('Organization successfully deleted!');
+        this.visibility = false;
+      },
+      err => {
+        this.error = _.get(err, 'error.message', 'some error');
+        this.spiner = false;
+      }
+    );
   }
 }

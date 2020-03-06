@@ -6,14 +6,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
   styleUrls: ['./dialog-window.component.css']
 })
 export class DialogWindowComponent implements OnInit {
-  @Output() onChanged = new EventEmitter<boolean>();
+  @Output() changed = new EventEmitter<boolean>();
   public nameButton = 'ОК';
   public showSpinner = false;
   @Input() errorMessage: string;
   @Input() spiner: boolean;
 
   GetDeleteStatus(state: boolean) {
-    this.onChanged.emit(state);
+    this.changed.emit(state);
   }
 
   constructor() {

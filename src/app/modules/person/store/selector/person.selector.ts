@@ -7,12 +7,10 @@ import {State} from '../../models';
 export const getState =
   createFeatureSelector<State>('storeDataPerson');
 
-
 export const getPageData = createSelector(
   getState,
   fromData.getData,
 );
-
 
 export const getDataStatus = createSelector(
   getState,

@@ -1,11 +1,6 @@
-import {async, getTestBed, TestBed} from '@angular/core/testing';
-import {MockStore, provideMockStore} from '@ngrx/store/testing';
+import {TestBed} from '@angular/core/testing';
+import {provideMockStore} from '@ngrx/store/testing';
 import {dataSelectors} from './index';
-
-
-let store: MockStore<{
-  DateModel
-}>;
 
 const initialState = {
   storeData: {
@@ -105,7 +100,7 @@ const initialState = {
     }
   }
 };
-describe('Selectors', () => {
+describe('DEVICE Selectors', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [

@@ -43,9 +43,7 @@ export class DataEffects {
     switchMap(([__, {currentPage, pageSize}]) => this.rootService.getAllDevice(currentPage, pageSize)
       .pipe(
         map((response: DataResponse) => new dataActions.Success(response)),
-        catchError((err) => {
-          return of(new dataActions.Error(_.get(err, 'error.message', 'some error')));
-        })
+        catchError(err => of(new dataActions.Error(_.get(err, 'error.message', 'some error'))))
       )
     ),
   );

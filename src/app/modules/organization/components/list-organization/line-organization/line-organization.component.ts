@@ -12,10 +12,10 @@ import {OrganizationModel} from '../../../models';
 export class LineOrganizationComponent implements OnInit {
   @Input() data: OrganizationModel;
   @Input() index: number;
-  @Output() onChanged = new EventEmitter<{ state: boolean, id: number }>();
+  @Output() changed = new EventEmitter<{ state: boolean, id: number }>();
 
   hideShowWindow(state: boolean, id: number) {
-    this.onChanged.emit({state, id});
+    this.changed.emit({state, id});
   }
 
   constructor(public service: DataOrganizationService,

@@ -1,9 +1,9 @@
 import {AddressModel} from './address.model';
 
 export interface OrganizationModel {
-  id: number;
+  id?: number;
   ownerForm: string;
   name: string;
-  address: [AddressModel];
+  address?: AddressModel[];
 }
 

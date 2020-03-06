@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormArray, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormArray,  Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import {ErrorStateMatcher} from '@angular/material';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import {ActivatedRoute} from '@angular/router';
@@ -9,13 +8,8 @@ import {finalize} from 'rxjs/operators';
 
 import {AppState, dataActionsPerson} from '../../../person';
 import {DataPersonService} from '../../services';
+import {Matcher} from '../../../shared';
 
-
-class Matcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return control.invalid && control.dirty;
-  }
-}
 
 @Component({
   selector: 'app-form-person',

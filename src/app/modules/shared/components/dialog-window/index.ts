@@ -1,1 +1,1 @@
-export * from './dialog-window.component'
+export * from './dialog-window.component';

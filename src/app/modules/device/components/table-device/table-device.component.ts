@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as _ from 'lodash';
 import {Observable} from 'rxjs';
 
@@ -16,7 +16,7 @@ import {DetailsDeviceModel, PaginatorModel} from '../../models';
   styleUrls: ['./table-device.component.css']
 })
 export class TableDeviceComponent implements OnInit {
-  public allDevice$: Observable<[DetailsDeviceModel]>;
+  public allDevice$: Observable<DetailsDeviceModel[]>;
   public visibility = false;
   public idDevice: number;
   public error: string;
@@ -30,8 +30,8 @@ export class TableDeviceComponent implements OnInit {
     public service: DataDeviceService,
     private store: Store<AppState>
   ) {
-    this.allDevice$ = store.select(dataSelectors.getPageDataDevice);
-    this.ObjDataPaginatorProperties$ = store.select(dataSelectors.getDataPaginatorProperties);
+    this.allDevice$ = store.pipe(select(dataSelectors.getPageDataDevice));
+    this.ObjDataPaginatorProperties$ = store.pipe(select(dataSelectors.getDataPaginatorProperties));
 
   }
 

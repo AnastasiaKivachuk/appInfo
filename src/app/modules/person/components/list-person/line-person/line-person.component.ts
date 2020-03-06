@@ -14,12 +14,11 @@ export class LinePersonComponent implements OnInit {
   @Input() data: DetailsPersonModel;
   @Input() index: number;
 
-  @Output() onChanged = new EventEmitter<{ state: boolean, id: number}>();
+  @Output() changed = new EventEmitter<{ state: boolean, id: number}>();
 
   hideShowWindow(state: boolean, id: number) {
-    this.onChanged.emit({state, id});
+    this.changed.emit({state, id});
   }
-
 
   constructor(public service: DataPersonService,
               public router: Router) {

@@ -1,1 +1,1 @@
-export * from './line-person.component'
+export * from './line-person.component';

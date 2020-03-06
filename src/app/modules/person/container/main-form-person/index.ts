@@ -1,1 +1,1 @@
-export * from './main-form-person.component'
+export * from './main-form-person.component';

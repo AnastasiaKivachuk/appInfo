@@ -6,7 +6,7 @@
 
   </div>
   <div class="cell"  >{{this.data.organization.name }}</div>
-  <div class="cell"  >{{this.data.contacts[0]?.phones[0].number }}</div>
+  <div class="cell"  *ngIf="this.data.contacts">{{this.data.contacts[0]?.phones[0].number }}</div>
 </div>
   <div class="wrapButton">
     <button mat-icon-button color="primary" (click)="hideShowWindow(true, this.data.id)">

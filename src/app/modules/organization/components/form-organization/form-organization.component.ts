@@ -1,21 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import * as _ from 'lodash';
 import {finalize} from 'rxjs/operators';
-import {ErrorStateMatcher} from '@angular/material';
 import {ActivatedRoute} from '@angular/router';
 
 import {AppState, dataActions} from '../../store/index';
 import {DataOrganizationService} from '../../services';
 import {OrganizationModel} from '../../models';
-
-
-class Matcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return control.invalid && control.dirty;
-  }
-}
+import {Matcher} from '../../../shared';
 
 @Component({
   selector: 'app-form-organization',
@@ -100,9 +93,9 @@ export class FormOrganizationComponent implements OnInit {
   }
 
 
-  deleteAddress(iA) {
+  deleteAddress(i) {
     const address = this.formOrganization.controls.address as FormArray;
-    address.removeAt(address.value.findIndex(select => select.id === iA));
+    address.removeAt(address.value.findIndex(select => select.id === i));
   }
 
   trackByFn(index) {
@@ -112,11 +105,7 @@ export class FormOrganizationComponent implements OnInit {
   submit() {
     this.showSpinner = true;
     const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.update(id);
-      return;
-    }
-    this.create();
+    return id ? this.update(id) : this.create();
   }
 
   create() {

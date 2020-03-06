@@ -5,6 +5,6 @@ import {OrganizationModel} from '../../person/models';
 export interface State {
   isFetching: boolean;
   error: string;
-  content: [OrganizationModel];
+  content: OrganizationModel[];
   paginator: PaginatorModel;
 }

@@ -1,21 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {Store} from '@ngrx/store';
-import {ErrorStateMatcher} from '@angular/material';
 import * as _ from 'lodash';
 import {finalize} from 'rxjs/operators';
 
 import {dataActions} from '../../store/action';
 import {AppState} from '../../store';
 import {DataDeviceService} from '../../services';
+import {Matcher} from '../../../shared';
 
 
-class Matcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return control.invalid && control.dirty;
-  }
-}
 
 @Component({
   selector: 'app-form',
@@ -51,7 +46,8 @@ export class FormComponent implements OnInit {
   }
 
   submit() {
-    const purchaseDate = this.myForm.value.purchaseDate ? moment(this.myForm.value.purchaseDate).format('DD-MM-YYYY') : '';
+    const valuePurchaseDate = this.myForm.value.purchaseDate;
+    const purchaseDate = valuePurchaseDate ? moment(valuePurchaseDate).format('DD-MM-YYYY') : '';
     const formData = {...this.myForm.value, purchaseDate};
     this.showSpinner = true;
     this.service.createDevice(formData)

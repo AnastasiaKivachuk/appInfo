@@ -4,7 +4,7 @@ import {SpinnerForButtonComponent} from './spinner-for-button/spinner-for-button
 
 
 
-describe('add ButtonWithSpinnerComponent', () => {
+describe('SHARED ButtonWithSpinnerComponent', () => {
   it('it ButtonWithSpinnerComponent  defined', () => {
     let component: ButtonWithSpinnerComponent;
     let fixture: ComponentFixture<ButtonWithSpinnerComponent>;
@@ -13,9 +13,9 @@ describe('add ButtonWithSpinnerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ButtonWithSpinnerComponent,
         SpinnerForButtonComponent]
-    })
+    });
     fixture = TestBed.createComponent(ButtonWithSpinnerComponent);
     component = fixture.componentInstance;
     expect(component).toBeDefined();
-  })
-})
+  });
+});

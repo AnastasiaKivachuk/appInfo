@@ -2,17 +2,16 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {ReactiveFormsModule, FormBuilder, FormsModule} from '@angular/forms';
 import {StoreModule} from '@ngrx/store';
 import {MatInputModule, MatFormFieldModule, MatDatepickerModule, MatCheckboxModule, MatNativeDateModule} from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ToastrModule} from 'ngx-toastr';
 
 import {FormComponent} from './form.component';
-import {ButtonWithSpinnerComponent} from '../button-with-spinner/button-with-spinner.component';
-import {SpinnerForButtonComponent} from '../button-with-spinner/spinner-for-button/spinner-for-button.component';
+import {SpinnerForButtonComponent, ButtonWithSpinnerComponent} from '../../../shared/index';
 import {fromData} from '../../store';
 
 
-describe('FormComponent', () => {
+describe('DEVICE FormComponent', () => {
   let component: FormComponent;
   let fixture: ComponentFixture<FormComponent>;
   const formBuilder: FormBuilder = new FormBuilder();
@@ -44,23 +43,22 @@ describe('FormComponent', () => {
 
   it('form component defined', () => {
     expect(component).toBeDefined();
-  })
+  });
 
   it('form invalid when empty', () => {
     expect(component.myForm.valid).toBeFalsy();
   });
 
-  it('field dateStart validity when empty', () => {
-    let errors = {};
-    const name = component.myForm.controls['name'];
-    errors = name.errors || {};
-    expect(errors['required']).toBeTruthy();
-  })
-  it('field dateEnd validity when empty', () => {
-    let errors = {};
-    const serialNumber = component.myForm.controls['serialNumber'];
-    errors = serialNumber.errors || {};
-    expect(errors['required']).toBeTruthy();
-  })
+  it('field name validity when empty', () => {
+    const name = component.myForm.controls.name;
+    const errors = name.errors || {};
+    expect(errors.required).toBeTruthy();
+  });
+
+  it('field serialNumber validity when empty', () => {
+    const serialNumber = component.myForm.controls.serialNumber;
+    const errors = serialNumber.errors || {};
+    expect(errors.required).toBeTruthy();
+  });
 });
 

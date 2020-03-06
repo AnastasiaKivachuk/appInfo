@@ -42,8 +42,14 @@ export class DataEffectsPerson {
     withLatestFrom(this.store.select(getDataPaginatorProperties)),
     switchMap(([, {currentPage, pageSize}]) => this.rootService.getAllPerson(currentPage, pageSize)
       .pipe(
-        map((response: DataResponse) => {console.log(response); return new dataActionsPerson.Success(response)}),
-        catchError((a) => {console.log(a); return of(new dataActionsPerson.Error('some error'))})
+        map((response: DataResponse) => {
+          // console.log(response);
+          return new dataActionsPerson.Success(response);
+        }),
+        catchError((a) => {
+          // console.log(a);
+          return of(new dataActionsPerson.Error('some error'));
+        })
       )
     ),
   );

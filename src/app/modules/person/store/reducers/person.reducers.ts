@@ -2,17 +2,16 @@ import {State} from '../../models';
 import * as StoreDataPersonAction from '../action/person.action';
 
 const initialState: State = {
-    isFetching: false,
-    error: '',
-    content: null,
-    paginator: {
-      totalElements: 0,
-      totalPages: 0,
-      pageSize: 10,
-      currentPage: 0
-    }
+  isFetching: false,
+  error: '',
+  content: null,
+  paginator: {
+    totalElements: 0,
+    totalPages: 0,
+    pageSize: 10,
+    currentPage: 0
   }
-;
+};
 
 export function reducer(state: State = initialState, action: StoreDataPersonAction.Actions) {
   switch (action.type) {
@@ -58,10 +57,12 @@ export function reducer(state: State = initialState, action: StoreDataPersonActi
     case StoreDataPersonAction.ADD:
       return {
         ...state,
-        // content: state.paginator.currentPage === state.paginator.totalPages - 1 && state.content.length < state.paginator.pageSize ? [...state.content, action.payload] : state.content,
+        // content: state.paginator.currentPage === state.paginator.totalPages - 1 &
+        // & state.content.length < state.paginator.pageSize ? [...state.content, action.payload] : state.content,
         // paginator: {
         //   ...state.paginator,
-        //   totalPages: state.paginator.totalPages * state.paginator.pageSize === state.paginator.totalElements ? state.paginator.totalPages + 1 : state.paginator.totalPages,
+        //   totalPages: state.paginator.totalPages * state.paginator.pageSize ==
+        //   = state.paginator.totalElements ? state.paginator.totalPages + 1 : state.paginator.totalPages,
         //   totalElements: state.paginator.totalElements + 1,
         // }
       };

@@ -1,1 +1,1 @@
-export * from './main-person-details.component'
+export * from './main-person-details.component';
